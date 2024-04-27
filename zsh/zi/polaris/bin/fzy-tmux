@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+function fzy-tmux {
+  local bindir="/home/hualimao/.zi/plugins/fzy/contrib"
+  
+  
+  
+  local -xU PATH="$bindir":"$PATH"
+  
+      "$bindir"/"fzy-tmux" "$@"
+
+  }
+
+fzy-tmux "$@"

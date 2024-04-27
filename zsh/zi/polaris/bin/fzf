@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+function fzf {
+  local bindir="/home/hualimao/.zi/plugins/fzf"
+  
+  
+  
+  local -xU PATH="$bindir":"$PATH"
+  
+      "$bindir"/"fzf" "$@"
+
+  }
+
+fzf "$@"
