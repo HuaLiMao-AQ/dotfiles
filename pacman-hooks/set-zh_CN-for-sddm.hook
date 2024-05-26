@@ -1,0 +1,12 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = sddm
+
+[Action]
+Description = Setting the language to zh_CN for sddm ...
+When = PostTransaction
+Exec = /bin/sh -c 'sed -i '/\[Service\]/a\Environment=LANG=zh_CN.UTF-8' /usr/lib/systemd/system/sddm.service'
+NeedsTargets
+
