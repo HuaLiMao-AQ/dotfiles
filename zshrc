@@ -57,6 +57,8 @@ alias lx='eza -lbhHigUmuSa@'
 alias lt='eza --tree $eza_params'
 alias tree='eza --tree $eza_params'
 
+alias rm='rm -i'
+
 # zsh 历史输入记录
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
