@@ -1,0 +1,121 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+
+    "modules-left": [
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "tray",
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "battery",
+        "clock"
+    ],
+
+    "hyprland/window": {
+        "format": " {initialTitle}",
+        "separate-outputs": true
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "urgent": "",
+            "active": ""
+        },
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
+    "tray": {
+        "spacing": 5
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume:2}%",
+        "format-muted": "\ueee8",
+        "format-bluetooth": "{icon}\uf294 {volume}%",
+        "format-bluetooth-muted": "\ueee8 {icon}\uf294",
+        "format-icons": {
+            "default": ["\uf026", "\uf027", "\uf028"]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
+
+    "network": {
+        "interface": "wlp4s0",
+        "format": "{ifname}",
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} 󰊗",
+        "format-disconnected": "",
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+        "tooltip-format-wifi": "WIFI: {essid}\nIP: {ipaddr}",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50
+    },
+
+    "cpu": {
+        "interval": 1,
+        "format": "{usage:1}% \uf2db"
+    },
+
+    "memory": {
+        "interval": 1,
+        "format": "{used:0.1f}G \uefc5",
+        "tooltip": true,
+        "tooltip-format": " RAM: {used:0.2f}G / {total:0.2f}G\nSwap: {swapUsed:0.2f}G / {swapTotal:0.2f}G"
+    },
+
+    "battery": {
+        "bat": "BAT0",
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": "{:%H:%M:%S} \uf017",
+        "format-alt": "{:%Y-%m-%d %H:%M:%S} \uf133",
+        "tooltip-format": "{calendar}",
+		"timezone": "Asia/Shanghai",
+        "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffead3'>{}</span>",
+                "days":       "<span color='#ecc6d9'>{}</span>",
+                "weeks":      "<span color='#99ffdd'>W{}</span>",
+                "weekdays":   "<span color='#ffcc66'>{}</span>",
+                "today":      "<span color='#ff6699'><u>{}</u></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    }
+}
