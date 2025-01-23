@@ -1,0 +1,23 @@
+/*
+ *
+ * Rofi Configure
+ * Author: HuaLiMao-AQ
+ * Github: @HuaLiMao-AQ
+ *
+ */
+
+configuration {
+    /* General setting */
+    modi: "drun,run";
+    case-sensitive: false;
+    cycle: true;
+    normalize-match: true;
+    show-icons: true;
+
+    /* Matching setting */
+    matching: "normal";
+    normalize-match: true;
+    
+}
+
+@theme "rounded-nord-dark"
