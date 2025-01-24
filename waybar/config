@@ -8,6 +8,7 @@
         "hyprland/window"
     ],
     "modules-center": [
+        "custom/logo",
         "hyprland/workspaces"
     ],
     "modules-right": [
@@ -23,6 +24,11 @@
     "hyprland/window": {
         "format": " {initialTitle}",
         "separate-outputs": true
+    },
+
+    "custom/logo": {
+        "format": "󰣇",
+        "tooltip": false
     },
 
     "hyprland/workspaces": {

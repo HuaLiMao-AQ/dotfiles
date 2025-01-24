@@ -46,6 +46,7 @@ tooltip {
 #pulseaudio,
 #tray,
 #window,
+#custom-logo,
 #workspaces {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -139,4 +140,10 @@ tooltip {
 
 #battery.critical {
     color: red;
+}
+
+#custom-logo {
+    color: #ffffff;
+    margin-left: 5px;
+    margin-right: 5px;
 }
