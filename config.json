@@ -1,0 +1,16 @@
+{
+  "config": {
+    "wezterm": {
+      "source": "wezterm",
+      "target": "~/.config/wezterm"
+    },
+    "p10k.zsh": {
+      "source": "p10k.zsh",
+      "target": "~/.p10k.zsh"
+    },
+    "zshrc": {
+      "source": "zshrc",
+      "target": "~/.zshrc"
+    }
+  }
+}
