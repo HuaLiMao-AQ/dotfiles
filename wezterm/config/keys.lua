@@ -4,6 +4,10 @@
 return function(config, wezterm, platform, colors, utils)
   local act = wezterm.action
   local keys = {}
+  local mouse_bindings = {}
+
+  local copy_target = platform.is_linux and "ClipboardAndPrimarySelection" or "Clipboard"
+  local paste_source = "Clipboard"
 
   -- macOS 使用 Super(Command)；其他平台默认使用 Ctrl+Shift。
   local primary_mod = platform.is_mac and "SUPER" or "CTRL|SHIFT"
@@ -36,8 +40,10 @@ return function(config, wezterm, platform, colors, utils)
   add_binding("-", primary_mod, act.DecreaseFontSize)
   add_binding("0", primary_mod, act.ResetFontSize)
 
-  add_binding("c", primary_mod, act.CopyTo("Clipboard"))
-  add_binding("v", primary_mod, act.PasteFrom("Clipboard"))
+  add_binding("c", primary_mod, act.CopyTo(copy_target))
+  add_binding("v", primary_mod, act.PasteFrom(paste_source))
+  add_binding("Insert", "CTRL", act.CopyTo(copy_target))
+  add_binding("Insert", "SHIFT", act.PasteFrom(paste_source))
   add_binding("f", primary_mod, act.Search("CurrentSelectionOrEmptyString"))
   add_binding("r", primary_mod .. "|SHIFT", act.ReloadConfiguration)
 
@@ -47,4 +53,31 @@ return function(config, wezterm, platform, colors, utils)
   end
 
   config.keys = keys
+
+  -- 选中文本后自动复制；右键单击直接粘贴，避免平台差异导致的剪贴板失效体感。
+  table.insert(mouse_bindings, {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelectionOrOpenLinkAtMouseCursor(copy_target),
+  })
+
+  table.insert(mouse_bindings, {
+    event = { Up = { streak = 2, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelection(copy_target),
+  })
+
+  table.insert(mouse_bindings, {
+    event = { Up = { streak = 3, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelection(copy_target),
+  })
+
+  table.insert(mouse_bindings, {
+    event = { Down = { streak = 1, button = "Right" } },
+    mods = "NONE",
+    action = act.PasteFrom(paste_source),
+  })
+
+  config.mouse_bindings = mouse_bindings
 end
