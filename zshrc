@@ -4,7 +4,7 @@
 
 # 仅在 macOS 下加载 Homebrew 环境，避免 Linux 误做 Homebrew 适配。
 if [[ "$(uname -s)" == "Darwin" ]] && [ -x "/opt/homebrew/bin/brew" ]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # ================================
@@ -19,13 +19,13 @@ typeset -A ZI
 typeset -gx ZI[HOME_DIR]="${HOME_DIR}"
 typeset -gx ZI[BIN_DIR]="${BIN_DIR}"
 if [ ! -f "$BIN_DIR/zi.zsh" ]; then
-	mkdir -p "${HOME_BIN}"
-	mkdir -p "${BIN_DIR}"
-	export ZI_HOME=$HOME_DIR
-	sh -c "$(curl -fsSL get.zshell.dev)" --
+    mkdir -p "${HOME_BIN}"
+    mkdir -p "${BIN_DIR}"
+    export ZI_HOME=$HOME_DIR
+    sh -c "$(curl -fsSL get.zshell.dev)" --
 fi
 if [ -f "${BIN_DIR}/zi.zsh" ]; then
-	source "${BIN_DIR}/zi.zsh"
+    source "${BIN_DIR}/zi.zsh"
 fi
 
 # ================================
@@ -39,7 +39,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Powerlevel10k instant prompt。
 # 这段仍然需要尽量靠前，但会放在可能产生输出的自举逻辑之后。
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # ================================
@@ -47,18 +47,18 @@ fi
 # ================================
 
 command_exists() {
-	command -v "$1" >/dev/null 2>&1
+    command -v "$1" >/dev/null 2>&1
 }
 
 resolve_first_binary() {
-	local candidate
-	for candidate in "$@"; do
-		if command_exists "$candidate"; then
-			print -r -- "$candidate"
-			return 0
-		fi
-	done
-	return 1
+    local candidate
+    for candidate in "$@"; do
+        if command_exists "$candidate"; then
+            print -r -- "$candidate"
+            return 0
+        fi
+    done
+    return 1
 }
 
 # ================================
@@ -70,7 +70,7 @@ zi light romkatv/powerlevel10k
 
 # 如果已经有 p10k 配置，则继续加载。
 if [[ -r "${HOME}/.p10k.zsh" ]]; then
-	source "${HOME}/.p10k.zsh"
+    source "${HOME}/.p10k.zsh"
 fi
 
 # ================================
@@ -85,20 +85,20 @@ fi
 EZA_BIN="$(resolve_first_binary eza eza-next exa)"
 
 if [[ -n "$EZA_BIN" ]] && [[ "$EZA_BIN" != "eza" ]]; then
-	eza() {
-		command "$EZA_BIN" "$@"
-	}
+    eza() {
+        command "$EZA_BIN" "$@"
+    }
 fi
 
 if [[ -n "$EZA_BIN" ]]; then
-	alias ls='eza $eza_params'
-	alias l='eza --git-ignore $eza_params'
-	alias ll='eza --all --header --long $eza_params'
-	alias llm='eza --all --header --long --sort=modified $eza_params'
-	alias la='eza -lbhHigUmuSa'
-	alias lx='eza -lbhHigUmuSa@'
-	alias lt='eza --tree $eza_params'
-	alias tree='eza --tree $eza_params'
+    alias ls='eza $eza_params'
+    alias l='eza --git-ignore $eza_params'
+    alias ll='eza --all --header --long $eza_params'
+    alias llm='eza --all --header --long --sort=modified $eza_params'
+    alias la='eza -lbhHigUmuSa'
+    alias lx='eza -lbhHigUmuSa@'
+    alias lt='eza --tree $eza_params'
+    alias tree='eza --tree $eza_params'
 fi
 
 alias rm='rm -i'
@@ -139,22 +139,17 @@ zi ice wait lucid atinit='zpcompinit'
 zi ice wait lucid
 zi light z-shell/z-a-bin-gem-node
 
-# 目录跳转增强：如果系统里装了 zoxide，就启用它。
-if command_exists zoxide; then
-	eval "$(zoxide init zsh)"
-fi
-
 # fzf-tab 依赖 compinit 之后的 completion 体系，放在补全链后面加载。
 zi ice wait lucid
 zi light Aloxaf/fzf-tab
 
 # 只有在存在可用 eza 二进制时才加载 zsh-eza。
 if [[ -n "$EZA_BIN" ]]; then
-	zi ice wait lucid
-	zi light z-shell/zsh-eza
+    zi ice wait lucid
+    zi light z-shell/zsh-eza
 else
-	# eza 不存在时跳过插件，避免运行时报错。
-	true
+    # eza 不存在时跳过插件，避免运行时报错。
+    true
 fi
 
 # 别名提醒：输入完整命令时，提示你已经有更短的 alias 可用。
@@ -205,12 +200,12 @@ zi light zsh-users/zsh-syntax-highlighting
 
 # iTerm2 shell integration 只在 macOS 下启用，Linux 不需要加载它。
 if [[ "$(uname -s)" == "Darwin" ]] && [[ -r "${HOME}/.iterm2_shell_integration.zsh" ]]; then
-	source "${HOME}/.iterm2_shell_integration.zsh"
+    source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
 # WezTerm 标题 hook 在 macOS / Linux 共用，并统一从标准配置目录加载。
 if [[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/wezterm-title.zsh" ]]; then
-	source "${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/wezterm-title.zsh"
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/wezterm-title.zsh"
 fi
 
 # ================================
@@ -219,16 +214,16 @@ fi
 
 # 按目录存在情况追加 PATH，兼容 macOS / Linux 共用配置。
 path_prepend_if_exists() {
-	local dir="$1"
-	if [[ -d "$dir" ]] && [[ ":$PATH:" != *":$dir:"* ]]; then
-		export PATH="$dir:$PATH"
-	fi
+    local dir="$1"
+    if [[ -d "$dir" ]] && [[ ":$PATH:" != *":$dir:"* ]]; then
+        export PATH="$dir:$PATH"
+    fi
 }
 
 # Homebrew 扩展路径仅在 macOS 下追加。
 if [[ "$(uname -s)" == "Darwin" ]]; then
-	path_prepend_if_exists "/opt/homebrew/opt/mysql-client/bin"
-	path_prepend_if_exists "/opt/homebrew/opt/rustup/bin"
+    path_prepend_if_exists "/opt/homebrew/opt/mysql-client/bin"
+    path_prepend_if_exists "/opt/homebrew/opt/rustup/bin"
 fi
 
 # 语言工具链与用户级 bin。
