@@ -79,5 +79,17 @@ return function(config, wezterm, platform, colors, utils)
     action = act.PasteFrom(paste_source),
   })
 
+  table.insert(mouse_bindings, {
+    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+    mods = "NONE",
+    action = act.ScrollByLine(-1),
+  })
+
+  table.insert(mouse_bindings, {
+    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+    mods = "NONE",
+    action = act.ScrollByLine(1),
+  })
+
   config.mouse_bindings = mouse_bindings
 end

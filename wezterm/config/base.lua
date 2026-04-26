@@ -34,6 +34,10 @@ return function(config, wezterm, platform, colors, utils)
   config.use_resize_increments = true
   config.hide_mouse_cursor_when_typing = true
 
+  -- 滚轮手感：慢速细腻，避免误触切换标签页。
+  config.mouse_wheel_scrolls_tabs = false
+  config.alternate_buffer_wheel_scroll_speed = 13
+
   -- 在现代 Linux 桌面环境下优先使用原生 Wayland。
   config.enable_wayland = true
 
