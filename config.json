@@ -11,6 +11,10 @@
     "zshrc": {
       "source": "zshrc",
       "target": "~/.zshrc"
+    },
+    "nvim": {
+      "source": "nvim",
+      "target": "~/.config/nvim"
     }
   }
 }
