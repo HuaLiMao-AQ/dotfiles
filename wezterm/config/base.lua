@@ -7,14 +7,8 @@ return function(config, wezterm, platform, colors, utils)
   config.check_for_updates = false
   config.show_update_window = false
 
-  -- 关闭声音铃声，只保留较轻的视觉反馈。
+  -- 关闭声音铃声和视觉铃声，避免 Tab 补全失败时整窗闪白。
   config.audible_bell = "Disabled"
-  config.visual_bell = {
-    fade_in_duration_ms = 60,
-    fade_out_duration_ms = 80,
-    fade_in_function = "EaseIn",
-    fade_out_function = "EaseOut",
-  }
 
   colors.apply(config)
 

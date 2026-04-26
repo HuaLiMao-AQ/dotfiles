@@ -59,7 +59,7 @@ return function(config, wezterm, platform, colors, utils)
     config.macos_window_background_blur = 15
   else
     -- Linux 默认使用适中的半透明；KDE Wayland blur 仍以 nightly 为主。
-    config.window_background_opacity = 0.92
+    config.window_background_opacity = 0.85
     -- KDE Wayland blur 可能仅在 WezTerm nightly 可用。
     -- 如果你在使用 nightly，可以取消下面这行注释：
     -- config.kde_window_background_blur = true
