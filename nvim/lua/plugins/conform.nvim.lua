@@ -27,306 +27,306 @@
 --
 
 return {
-    -- ========================================================================
-    -- Formatter 工具自动安装
-    -- ========================================================================
+	-- ========================================================================
+	-- Formatter 工具自动安装
+	-- ========================================================================
 
-    {
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-        dependencies = {
-            "mason-org/mason.nvim",
-        },
+		dependencies = {
+			"mason-org/mason.nvim",
+		},
 
-        opts = {
-            ensure_installed = {
-                -- Lua
-                "stylua",
+		opts = {
+			ensure_installed = {
+				-- Lua
+				"stylua",
 
-                -- Shell
-                "shfmt",
+				-- Shell
+				"shfmt",
 
-                -- Go
-                "goimports",
-                "gofumpt",
+				-- Go
+				"goimports",
+				"gofumpt",
 
-                -- C / C++
-                "clang-format",
+				-- C / C++
+				"clang-format",
 
-                -- Java
-                "google-java-format",
+				-- Java
+				"google-java-format",
 
-                -- Kotlin
-                "ktlint",
+				-- Kotlin
+				"ktlint",
 
-                -- Python
-                "ruff",
+				-- Python
+				"ruff",
 
-                -- Web / JSON / YAML / Markdown
-                "prettier",
-            },
+				-- Web / JSON / YAML / Markdown
+				"prettier",
+			},
 
-            -- 启动时检查缺失工具并安装
-            run_on_start = true,
+			-- 启动时检查缺失工具并安装
+			run_on_start = true,
 
-            -- 不自动更新已安装工具
-            auto_update = false,
+			-- 不自动更新已安装工具
+			auto_update = false,
 
-            -- 延迟启动，避免和 Neovim 首屏启动抢资源
-            start_delay = 3000,
+			-- 延迟启动，避免和 Neovim 首屏启动抢资源
+			start_delay = 3000,
 
-            -- 24 小时内不重复检查
-            debounce_hours = 24,
-        },
-    },
+			-- 24 小时内不重复检查
+			debounce_hours = 24,
+		},
+	},
 
-    -- ========================================================================
-    -- 格式化主插件
-    -- ========================================================================
+	-- ========================================================================
+	-- 格式化主插件
+	-- ========================================================================
 
-    {
-        "stevearc/conform.nvim",
+	{
+		"stevearc/conform.nvim",
 
-        event = {
-            "BufReadPre",
-            "BufNewFile",
-        },
+		event = {
+			"BufReadPre",
+			"BufNewFile",
+		},
 
-        cmd = {
-            "ConformInfo",
-        },
+		cmd = {
+			"ConformInfo",
+		},
 
-        keys = {
-            {
-                "<leader>cf",
-                function()
-                    require("conform").format({
-                        async = true,
-                        lsp_format = "fallback",
-                    })
-                end,
-                mode = {
-                    "n",
-                    "v",
-                },
-                desc = "格式化当前文件",
-            },
-        },
+		keys = {
+			{
+				"<leader>cf",
+				function()
+					require("conform").format({
+						async = true,
+						lsp_format = "fallback",
+					})
+				end,
+				mode = {
+					"n",
+					"v",
+				},
+				desc = "格式化当前文件",
+			},
+		},
 
-        opts = {
-            -- ====================================================================
-            -- 默认格式化行为
-            -- ====================================================================
+		opts = {
+			-- ====================================================================
+			-- 默认格式化行为
+			-- ====================================================================
 
-            default_format_opts = {
-                -- fallback:
-                --   优先使用 conform formatter
-                --   没有 formatter 时使用 LSP 格式化
-                lsp_format = "fallback",
-            },
+			default_format_opts = {
+				-- fallback:
+				--   优先使用 conform formatter
+				--   没有 formatter 时使用 LSP 格式化
+				lsp_format = "fallback",
+			},
 
-            -- ====================================================================
-            -- Formatter 映射
-            -- ====================================================================
-            --
-            -- 说明:
-            --   • key 是 Neovim filetype
-            --   • value 是 formatter 列表
-            --   • formatter 会按顺序执行
+			-- ====================================================================
+			-- Formatter 映射
+			-- ====================================================================
+			--
+			-- 说明:
+			--   • key 是 Neovim filetype
+			--   • value 是 formatter 列表
+			--   • formatter 会按顺序执行
 
-            formatters_by_ft = {
-                -- Lua / Neovim 配置
-                lua = {
-                    "stylua",
-                },
+			formatters_by_ft = {
+				-- Lua / Neovim 配置
+				lua = {
+					"stylua",
+				},
 
-                -- Shell
-                sh = {
-                    "shfmt",
-                },
+				-- Shell
+				sh = {
+					"shfmt",
+				},
 
-                bash = {
-                    "shfmt",
-                },
+				bash = {
+					"shfmt",
+				},
 
-                zsh = {
-                    "shfmt",
-                },
+				zsh = {
+					"shfmt",
+				},
 
-                -- Go
-                go = {
-                    "goimports",
-                    "gofumpt",
-                },
+				-- Go
+				go = {
+					"goimports",
+					"gofumpt",
+				},
 
-                -- Rust
-                -- rustfmt 通常由 rustup 提供，不通过 Mason 安装
-                rust = {
-                    "rustfmt",
-                },
+				-- Rust
+				-- rustfmt 通常由 rustup 提供，不通过 Mason 安装
+				rust = {
+					"rustfmt",
+				},
 
-                -- C / C++
-                c = {
-                    "clang_format",
-                },
+				-- C / C++
+				c = {
+					"clang_format",
+				},
 
-                cpp = {
-                    "clang_format",
-                },
+				cpp = {
+					"clang_format",
+				},
 
-                objc = {
-                    "clang_format",
-                },
+				objc = {
+					"clang_format",
+				},
 
-                objcpp = {
-                    "clang_format",
-                },
+				objcpp = {
+					"clang_format",
+				},
 
-                cuda = {
-                    "clang_format",
-                },
+				cuda = {
+					"clang_format",
+				},
 
-                -- Java
-                java = {
-                    "google_java_format",
-                },
+				-- Java
+				java = {
+					"google_java_format",
+				},
 
-                -- Kotlin
-                kotlin = {
-                    "ktlint",
-                },
+				-- Kotlin
+				kotlin = {
+					"ktlint",
+				},
 
-                -- Python
-                python = {
-                    "ruff_organize_imports",
-                    "ruff_format",
-                },
+				-- Python
+				python = {
+					"ruff_organize_imports",
+					"ruff_format",
+				},
 
-                -- Web
-                html = {
-                    "prettier",
-                },
+				-- Web
+				html = {
+					"prettier",
+				},
 
-                css = {
-                    "prettier",
-                },
+				css = {
+					"prettier",
+				},
 
-                scss = {
-                    "prettier",
-                },
+				scss = {
+					"prettier",
+				},
 
-                javascript = {
-                    "prettier",
-                },
+				javascript = {
+					"prettier",
+				},
 
-                javascriptreact = {
-                    "prettier",
-                },
+				javascriptreact = {
+					"prettier",
+				},
 
-                typescript = {
-                    "prettier",
-                },
+				typescript = {
+					"prettier",
+				},
 
-                typescriptreact = {
-                    "prettier",
-                },
+				typescriptreact = {
+					"prettier",
+				},
 
-                -- 配置文件
-                json = {
-                    "prettier",
-                },
+				-- 配置文件
+				json = {
+					"prettier",
+				},
 
-                jsonc = {
-                    "prettier",
-                },
+				jsonc = {
+					"prettier",
+				},
 
-                yaml = {
-                    "prettier",
-                },
+				yaml = {
+					"prettier",
+				},
 
-                yml = {
-                    "prettier",
-                },
+				yml = {
+					"prettier",
+				},
 
-                toml = {
-                    "taplo",
-                },
+				toml = {
+					"taplo",
+				},
 
-                -- Markdown
-                markdown = {
-                    "prettier",
-                },
-            },
+				-- Markdown
+				markdown = {
+					"prettier",
+				},
+			},
 
-            -- ====================================================================
-            -- 保存时自动格式化
-            -- ====================================================================
+			-- ====================================================================
+			-- 保存时自动格式化
+			-- ====================================================================
 
-            format_on_save = function(bufnr)
-                local filetype = vim.bo[bufnr].filetype
+			format_on_save = function(bufnr)
+				local filetype = vim.bo[bufnr].filetype
 
-                -- 特殊文件类型禁用自动格式化
-                -- 后续如果某类文件不想保存自动格式化，加到这里
-                local disabled_filetypes = {
-                    -- markdown = true,
-                }
+				-- 特殊文件类型禁用自动格式化
+				-- 后续如果某类文件不想保存自动格式化，加到这里
+				local disabled_filetypes = {
+					-- markdown = true,
+				}
 
-                if disabled_filetypes[filetype] then
-                    return nil
-                end
+				if disabled_filetypes[filetype] then
+					return nil
+				end
 
-                return {
-                    timeout_ms = 3000,
-                    lsp_format = "fallback",
-                }
-            end,
+				return {
+					timeout_ms = 3000,
+					lsp_format = "fallback",
+				}
+			end,
 
-            -- ====================================================================
-            -- Formatter 细节配置
-            -- ====================================================================
+			-- ====================================================================
+			-- Formatter 细节配置
+			-- ====================================================================
 
-            formatters = {
-                -- Shell:
-                -- -i 4 表示缩进 4 个空格
-                shfmt = {
-                    prepend_args = {
-                        "-i",
-                        "4",
-                    },
-                },
+			formatters = {
+				-- Shell:
+				-- -i 4 表示缩进 4 个空格
+				shfmt = {
+					prepend_args = {
+						"-i",
+						"4",
+					},
+				},
 
-                -- Web:
-                -- 优先使用项目本地 node_modules/.bin/prettier
-                prettier = {
-                    prefer_local = "node_modules/.bin",
-                },
+				-- Web:
+				-- 优先使用项目本地 node_modules/.bin/prettier
+				prettier = {
+					prefer_local = "node_modules/.bin",
+				},
 
-                -- C / C++:
-                -- 默认会读取项目中的 .clang-format
-                clang_format = {},
+				-- C / C++:
+				-- 默认会读取项目中的 .clang-format
+				clang_format = {},
 
-                -- Go:
-                -- goimports 处理 import
-                -- gofumpt 提供更严格的 gofmt 风格
-                goimports = {},
-                gofumpt = {},
+				-- Go:
+				-- goimports 处理 import
+				-- gofumpt 提供更严格的 gofmt 风格
+				goimports = {},
+				gofumpt = {},
 
-                -- Python:
-                -- ruff_organize_imports 负责 import 排序
-                -- ruff_format 负责格式化
-                ruff_organize_imports = {},
-                ruff_format = {},
+				-- Python:
+				-- ruff_organize_imports 负责 import 排序
+				-- ruff_format 负责格式化
+				ruff_organize_imports = {},
+				ruff_format = {},
 
-                -- Java
-                google_java_format = {},
+				-- Java
+				google_java_format = {},
 
-                -- Kotlin
-                ktlint = {},
+				-- Kotlin
+				ktlint = {},
 
-                -- Rust:
-                -- rustfmt 通常来自 rustup component
-                rustfmt = {},
-            },
-        },
-    },
+				-- Rust:
+				-- rustfmt 通常来自 rustup component
+				rustfmt = {},
+			},
+		},
+	},
 }

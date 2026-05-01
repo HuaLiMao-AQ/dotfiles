@@ -20,65 +20,65 @@
 --
 
 return {
-    {
-        "akinsho/bufferline.nvim",
+	{
+		"akinsho/bufferline.nvim",
 
-        -- 启动后延迟加载
-        event = "VeryLazy",
+		-- 启动后延迟加载
+		event = "VeryLazy",
 
-        -- 图标依赖
-        dependencies = {
-            "nvim-mini/mini.icons",
-        },
+		-- 图标依赖
+		dependencies = {
+			"nvim-mini/mini.icons",
+		},
 
-        -- 快捷键配置
-        keys = {
-            {
-                "<S-l>",
-                "<Cmd>BufferLineCycleNext<CR>",
-                mode = "n",
-                desc = "Next buffer",
-            },
-            {
-                "<S-h>",
-                "<Cmd>BufferLineCyclePrev<CR>",
-                mode = "n",
-                desc = "Previous buffer",
-            },
-        },
+		-- 快捷键配置
+		keys = {
+			{
+				"<S-l>",
+				"<Cmd>BufferLineCycleNext<CR>",
+				mode = "n",
+				desc = "Next buffer",
+			},
+			{
+				"<S-h>",
+				"<Cmd>BufferLineCyclePrev<CR>",
+				mode = "n",
+				desc = "Previous buffer",
+			},
+		},
 
-        opts = {
-            options = {
-                mode = "buffers",              -- 显示 buffer 而不是 tab
-                separator_style = "slant",     -- 斜线分隔符
-                always_show_bufferline = true, -- 始终显示标签栏
+		opts = {
+			options = {
+				mode = "buffers", -- 显示 buffer 而不是 tab
+				separator_style = "thin", -- 斜线分隔符
+				always_show_bufferline = false, -- 始终显示标签栏
 
-                show_buffer_close_icons = false, -- 隐藏 buffer 关闭按钮
-                show_close_icon = false,         -- 隐藏右侧关闭按钮
+				show_buffer_close_icons = false, -- 隐藏 buffer 关闭按钮
+				show_close_icon = false, -- 隐藏右侧关闭按钮
 
-                diagnostics = "nvim_lsp", -- 显示 LSP 诊断信息
+				diagnostics = "nvim_lsp", -- 显示 LSP 诊断信息
 
-                -- 自定义诊断显示格式：
-                -- 例如 E2 W1 表示 2 个错误、1 个警告
-                diagnostics_indicator = function(_, _, diag)
-                    local icons = {
-                        Error = "E",
-                        Warn = "W",
-                        Info = "I",
-                        Hint = "H",
-                    }
+				-- 自定义诊断显示格式：
+				-- 例如 E2 W1 表示 2 个错误、1 个警告
+				diagnostics_indicator = function(_, _, diag)
+					local icons = {
+						Error = "E",
+						Warn = "W",
+						Info = "I",
+						Hint = "H",
+					}
 
-                    local result = {}
+					local result = {}
 
-                    for level, count in pairs(diag) do
-                        if icons[level] and count > 0 then
-                            table.insert(result, string.format("%s%d", icons[level], count))
-                        end
-                    end
+					for level, count in pairs(diag) do
+						if icons[level] and count > 0 then
+							table.insert(result, string.format("%s%d", icons[level], count))
+						end
+					end
 
-                    return table.concat(result, " ")
-                end,
-            },
-        },
-    },
+					return table.concat(result, " ")
+				end,
+			},
+		},
+	},
 }
