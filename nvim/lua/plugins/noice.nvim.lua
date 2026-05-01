@@ -33,6 +33,13 @@ return {
                 backend = "nui",
             },
             views = {
+                notify = {
+                    backend = "snacks",
+                    fallback = "mini",
+                    format = "notify",
+                    replace = false,
+                    merge = false,
+                },
                 cmdline_popup = {
                     position = {
                         row = 4,

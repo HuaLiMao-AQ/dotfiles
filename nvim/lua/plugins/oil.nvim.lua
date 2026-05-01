@@ -3,11 +3,11 @@
 -- ============================================================================
 --
 -- 功能说明:
---   • 使用 oil.nvim 替代 netrw / nvim-tree 作为文件管理器
+--   • 使用 oil.nvim 作为轻量目录编辑器
 --   • 将文件系统当成普通 Neovim buffer 编辑
 --   • 支持直接重命名、移动、删除、新建文件和目录
---   • 支持浮动窗口、当前窗口、左侧侧边窗三种打开方式
---   • 适合配合 fzf-lua 使用：fzf-lua 负责搜索，oil.nvim 负责文件结构管理
+--   • 支持浮动窗口、当前窗口两种打开方式
+--   • 侧边文件浏览统一交给 neo-tree.nvim
 --
 -- 配置效果:
 --   ├─ 普通打开: - 打开当前文件所在目录
@@ -32,54 +32,6 @@
 --   • dependencies 用于声明 mini.icons 图标依赖
 --   • opts 会自动传给 require("oil").setup(...)
 --
-
--- ============================================================================
--- 左侧侧边栏打开函数
--- ============================================================================
---
--- 说明:
---   • oil.nvim 默认不是传统文件树侧边栏
---   • 这里通过 topleft 35vnew 手动创建左侧垂直窗口
---   • 然后在该窗口中打开当前文件所在目录
---
--- 行为:
---   • 如果当前 buffer 是普通文件，则打开当前文件所在目录
---   • 如果当前 buffer 没有实际文件路径，则打开当前工作目录
---   • 如果已经存在 oil 窗口，则不会重复打开多个侧边栏
-
-local function open_oil_sidebar()
-	-- 避免重复打开多个 oil 侧边栏
-	for _, win in ipairs(vim.api.nvim_list_wins()) do
-		local buf = vim.api.nvim_win_get_buf(win)
-
-		if vim.bo[buf].filetype == "oil" then
-			vim.api.nvim_set_current_win(win)
-			return
-		end
-	end
-
-	-- 获取当前文件所在目录
-	local dir = vim.fn.expand("%:p:h")
-
-	-- 如果当前 buffer 没有具体文件路径，则使用当前工作目录
-	if dir == "" or dir == "." then
-		dir = vim.fn.getcwd()
-	end
-
-	-- 在左侧创建 35 列宽的垂直窗口
-	vim.cmd("topleft 35vnew")
-
-	-- 固定侧边栏宽度
-	vim.wo.winfixwidth = true
-
-	-- 侧边栏不显示行号和 signcolumn
-	vim.wo.number = false
-	vim.wo.relativenumber = false
-	vim.wo.signcolumn = "no"
-
-	-- 在当前侧边窗口中打开 oil
-	require("oil").open(dir)
-end
 
 return {
 	{
@@ -387,7 +339,7 @@ return {
 				["q"] = "actions.close",
 
 				-- 刷新当前目录
-				["r"] = "actions.refresh",
+				["R"] = "actions.refresh",
 
 				-- 返回上级目录
 				["-"] = "actions.parent",
@@ -412,6 +364,36 @@ return {
 
 				-- 切换回收站视图
 				["g\\"] = "actions.toggle_trash",
+
+				-- 与 Neo-tree 保持一致的编辑习惯。
+				-- Oil 的创建 / 重命名 / 移动 / 删除本质是编辑目录 buffer 后 :w 保存。
+				["a"] = {
+					function()
+						vim.cmd("normal! o")
+						vim.cmd("startinsert")
+					end,
+					desc = "新建文件或目录",
+				},
+				["r"] = {
+					function()
+						vim.cmd("normal! cw")
+						vim.cmd("startinsert")
+					end,
+					desc = "重命名当前条目",
+				},
+				["m"] = {
+					function()
+						vim.cmd("normal! cw")
+						vim.cmd("startinsert")
+					end,
+					desc = "移动当前条目",
+				},
+				["d"] = {
+					function()
+						vim.cmd("normal! dd")
+					end,
+					desc = "删除当前条目",
+				},
 			},
 		},
 

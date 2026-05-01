@@ -60,6 +60,25 @@ return {
 		window = {
 			position = "right",
 			width = 34,
+			mappings = {
+				["<CR>"] = "open",
+				["a"] = {
+					"add",
+					config = {
+						show_path = "none",
+					},
+				},
+				["A"] = "add_directory",
+				["r"] = "rename",
+				["m"] = "move",
+				["c"] = "copy",
+				["d"] = "delete",
+				["p"] = "toggle_preview",
+				["R"] = "refresh",
+				["q"] = "close_window",
+				["g."] = "toggle_hidden",
+				["?"] = "show_help",
+			},
 		},
 
 		-- =========================================================================

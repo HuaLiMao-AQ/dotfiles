@@ -54,7 +54,7 @@ return {
 
 		-- 添加测试样例
 		{
-			"<leader>ca",
+			"<leader>cA",
 			"<cmd>CompetiTest add_testcase<CR>",
 			desc = "CP: Add testcase",
 		},
@@ -68,7 +68,7 @@ return {
 
 		-- 删除测试样例
 		{
-			"<leader>cd",
+			"<leader>cD",
 			"<cmd>CompetiTest delete_testcase<CR>",
 			desc = "CP: Delete testcase",
 		},
