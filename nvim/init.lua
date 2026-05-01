@@ -3,8 +3,11 @@
 -- ============================================================================
 
 -- 加载基础配置
-require("config.options")  -- 编辑器选项（缩进、UI、搜索等）
-require("config.keymaps")  -- 快捷键映射
+require("config.options") -- 编辑器选项（缩进、UI、搜索等）
+require("config.keymaps") -- 快捷键映射
+
+-- Clang Format
+require("config.clang_format").setup()
 
 -- Lazy 入口
 require("config.lazy")
