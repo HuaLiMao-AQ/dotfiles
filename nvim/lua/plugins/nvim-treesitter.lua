@@ -194,10 +194,10 @@ return {
 				desc = "Install nvim-treesitter parsers synchronously",
 			})
 
-			-- 日常启动后异步安装，避免阻塞 UI
-			vim.schedule(function()
+			-- 日常启动后延迟异步安装，避免和打开首个文件抢资源
+			vim.defer_fn(function()
 				install_parsers_async()
-			end)
+			end, 2000)
 
 			-- ====================================================================
 			-- Tree-sitter 高亮启用列表

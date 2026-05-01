@@ -268,9 +268,18 @@ return {
             --   只启用 Mason 当前已经安装完成的 server。
             --   如果某个 server 还没安装，先执行 :Mason 安装，或等待 Mason 自动安装完成后重启。
 
-            for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
-                vim.lsp.enable(server_name)
+            local enabled_servers = {}
+            for _, server_name in ipairs(servers) do
+                enabled_servers[server_name] = true
             end
+
+            vim.schedule(function()
+                for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+                    if enabled_servers[server_name] then
+                        vim.lsp.enable(server_name)
+                    end
+                end
+            end)
 
             -- ====================================================================
             -- 诊断显示配置

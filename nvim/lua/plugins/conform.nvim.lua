@@ -66,14 +66,14 @@ return {
 				"prettier",
 			},
 
-			-- 启动时检查缺失工具并安装
+			-- 启动后异步检查缺失工具并安装
 			run_on_start = true,
 
 			-- 不自动更新已安装工具
 			auto_update = false,
 
-			-- 延迟启动，避免和 Neovim 首屏启动抢资源
-			start_delay = 3000,
+			-- 延迟启动，避免和 Neovim 首屏 / 首个文件加载抢资源
+			start_delay = 8000,
 
 			-- 24 小时内不重复检查
 			debounce_hours = 24,
