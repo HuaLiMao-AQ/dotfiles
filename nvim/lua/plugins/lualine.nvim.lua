@@ -332,5 +332,29 @@ return {
                 "quickfix",
             },
         },
+
+        config = function(_, opts)
+            require("lualine").setup(opts)
+
+            local editor_bg = "#1a1b26"
+
+            for _, mode in ipairs({
+                "normal",
+                "insert",
+                "visual",
+                "replace",
+                "command",
+                "terminal",
+                "inactive",
+            }) do
+                local group = "lualine_c_" .. mode
+                local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = group })
+
+                if ok and hl then
+                    hl.bg = editor_bg
+                    vim.api.nvim_set_hl(0, group, hl)
+                end
+            end
+        end,
     },
 }

@@ -79,6 +79,66 @@ return {
 					return table.concat(result, " ")
 				end,
 			},
+
+			highlights = {
+				fill = {
+					bg = "NONE",
+				},
+				background = {
+					fg = "#565f89",
+					bg = "NONE",
+				},
+				buffer_visible = {
+					fg = "#7f849c",
+					bg = "NONE",
+				},
+				buffer_selected = {
+					fg = "#c0caf5",
+					bg = "#1a1b26",
+					bold = true,
+					italic = false,
+				},
+				separator = {
+					fg = "#1a1b26",
+					bg = "NONE",
+				},
+				separator_visible = {
+					fg = "#1a1b26",
+					bg = "NONE",
+				},
+				separator_selected = {
+					fg = "#1a1b26",
+					bg = "NONE",
+				},
+				indicator_selected = {
+					fg = "#7aa2f7",
+					bg = "#1a1b26",
+				},
+				modified = {
+					fg = "#9d7a45",
+					bg = "NONE",
+				},
+				modified_visible = {
+					fg = "#ad8b52",
+					bg = "NONE",
+				},
+				modified_selected = {
+					fg = "#e0af68",
+					bg = "#1a1b26",
+				},
+				close_button = {
+					fg = "#565f89",
+					bg = "NONE",
+				},
+				close_button_visible = {
+					fg = "#7f849c",
+					bg = "NONE",
+				},
+				close_button_selected = {
+					fg = "#7aa2f7",
+					bg = "#1a1b26",
+				},
+			},
 		},
 	},
 }

@@ -12,6 +12,29 @@ return {
                 local border = util.blend_bg(c.blue1, 0.24)
                 local accent = util.blend_bg(c.orange, 0.28)
 
+                hl.Normal = {
+                    bg = c.bg,
+                }
+                hl.NormalNC = {
+                    bg = c.bg,
+                }
+                hl.SignColumn = {
+                    bg = c.bg,
+                }
+                hl.LineNr = {
+                    bg = c.bg,
+                }
+                hl.CursorLineNr = {
+                    bg = c.bg,
+                }
+                hl.EndOfBuffer = {
+                    bg = c.bg,
+                }
+                hl.WinSeparator = {
+                    fg = border,
+                    bg = c.bg,
+                }
+
                 hl.NormalFloat = {
                     bg = c.bg_float,
                 }
@@ -29,23 +52,28 @@ return {
                     bg = c.bg,
                 }
                 hl.SnacksDashboardHeader = {
-                    fg = c.blue,
+                    fg = c.cyan,
                     bold = true,
                 }
+                hl.SnacksDashboardTitle = {
+                    fg = c.blue1,
+                    bold = false,
+                }
                 hl.SnacksDashboardDesc = {
-                    fg = c.fg_dark,
+                    fg = c.fg,
                 }
                 hl.SnacksDashboardIcon = {
                     fg = c.cyan,
                 }
                 hl.SnacksDashboardKey = {
                     fg = c.orange,
+                    bold = true,
                 }
                 hl.SnacksDashboardFooter = {
                     fg = c.comment,
                 }
                 hl.SnacksDashboardDir = {
-                    fg = c.comment,
+                    fg = c.blue5,
                 }
 
                 hl.SnacksInputBorder = {
