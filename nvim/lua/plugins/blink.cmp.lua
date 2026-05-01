@@ -29,7 +29,7 @@ return {
 
 		-- 锁定 v1 主版本
 		-- 避免 v2 破坏性更新导致配置失效
-		version = "1.*",
+		version = "*",
 
 		-- 不懒加载
 		-- 原因:
@@ -178,6 +178,12 @@ return {
 
 					-- 延迟 200ms 显示，避免窗口闪烁
 					auto_show_delay_ms = 200,
+				},
+
+				accept = {
+					auto_brackets = {
+						enabled = true,
+					},
 				},
 			},
 
