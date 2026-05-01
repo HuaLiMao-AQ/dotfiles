@@ -20,7 +20,7 @@
 --   NORMAL   dev  +12 ~3 -1  ~/Project/ShanCircle/server/main.go       gopls ✓  go  42%  120:8
 --
 -- Lazy.nvim 说明:
---   • dependencies 用于声明 nvim-web-devicons 图标依赖
+--   • dependencies 用于声明 mini.icons 图标依赖
 --   • event = "VeryLazy" 表示启动完成后延迟加载
 --   • opts 会自动传给 require("lualine").setup(...)
 --
@@ -36,7 +36,7 @@ return {
         -- 图标依赖
         -- lualine 的 filetype、branch 等组件会用到这些图标
         dependencies = {
-            "nvim-tree/nvim-web-devicons",
+            "nvim-mini/mini.icons",
         },
 
         opts = {

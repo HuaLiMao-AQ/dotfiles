@@ -14,7 +14,7 @@
 --   └─ 导航: 快速在多个 buffer 之间切换
 --
 -- Lazy.nvim 说明:
---   • dependencies 用于声明 nvim-web-devicons 图标依赖
+--   • dependencies 用于声明 mini.icons 图标依赖
 --   • event = "VeryLazy" 表示启动后延迟加载，减少启动压力
 --   • keys 会在按下快捷键时自动加载插件
 --
@@ -28,7 +28,7 @@ return {
 
         -- 图标依赖
         dependencies = {
-            "nvim-tree/nvim-web-devicons",
+            "nvim-mini/mini.icons",
         },
 
         -- 快捷键配置

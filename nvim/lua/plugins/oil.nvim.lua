@@ -29,7 +29,7 @@
 -- Lazy.nvim 说明:
 --   • cmd = "Oil" 表示执行 :Oil 时自动加载插件
 --   • keys 表示按下快捷键时自动加载插件
---   • dependencies 用于声明 nvim-web-devicons 图标依赖
+--   • dependencies 用于声明 mini.icons 图标依赖
 --   • opts 会自动传给 require("oil").setup(...)
 --
 
@@ -93,7 +93,7 @@ return {
 
 		-- 图标依赖
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+			"nvim-mini/mini.icons",
 		},
 
 		-- ====================================================================
