@@ -26,141 +26,133 @@
 --
 
 return {
-    {
-        "nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-treesitter/nvim-treesitter",
 
-        -- 锁定传统配置分支
-        branch = "master",
+		-- 锁定传统配置分支
+		branch = "master",
 
-        -- 更新插件后同步更新 parser
-        build = ":TSUpdate",
+		-- 更新插件后同步更新 parser
+		build = ":TSUpdate",
 
-        -- 打开文件时加载
-        event = {
-            "BufReadPost",
-            "BufNewFile",
-        },
+		-- 打开文件时加载
+		event = {
+			"BufReadPost",
+			"BufNewFile",
+		},
 
-        opts = {
-            -- ====================================================================
-            -- Parser 安装列表
-            -- ====================================================================
-            --
-            -- 这里按你的常用语言配置:
-            --   • Go / Rust / C / C++ / Java / Kotlin
-            --   • Python / Lua / Shell
-            --   • HTML / CSS / JavaScript / TypeScript
-            --   • JSON / YAML / TOML / Markdown
-            --   • Dockerfile / Gitignore / Regex
+		opts = {
+			-- ====================================================================
+			-- Parser 安装列表
+			-- ====================================================================
+			ensure_installed = {
+				-- Neovim / Lua
+				"lua",
+				"luadoc",
+				"vim",
+				"vimdoc",
 
-            ensure_installed = {
-                -- Neovim / Lua
-                "lua",
-                "luadoc",
-                "vim",
-                "vimdoc",
+				-- Shell / 配置
+				"bash",
+				"json",
+				"jsonc",
+				"yaml",
+				"toml",
 
-                -- Shell / 配置
-                "bash",
-                "json",
-                "jsonc",
-                "yaml",
-                "toml",
+				-- Go
+				"go",
+				"gomod",
+				"gosum",
+				"gowork",
 
-                -- Go
-                "go",
-                "gomod",
-                "gosum",
-                "gowork",
+				-- Rust
+				"rust",
 
-                -- Rust
-                "rust",
+				-- C / C++
+				"c",
+				"cpp",
 
-                -- C / C++
-                "c",
-                "cpp",
+				-- JVM
+				"java",
+				"kotlin",
 
-                -- JVM
-                "java",
-                "kotlin",
+				-- Python
+				"python",
 
-                -- Python
-                "python",
+				-- Web
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"tsx",
 
-                -- Web
-                "html",
-                "css",
-                "javascript",
-                "typescript",
-                "tsx",
+				-- 文档
+				"markdown",
+				"markdown_inline",
 
-                -- 文档
-                "markdown",
-                "markdown_inline",
+				-- 其他常用
+				"dockerfile",
+				"gitignore",
+				"regex",
+				"query",
+			},
 
-                -- 其他常用
-                "dockerfile",
-                "gitignore",
-                "regex",
-                "query",
-            },
+			-- 自动安装缺失 parser
+			auto_install = true,
 
-            -- 自动安装缺失 parser
-            auto_install = true,
+			-- 同步安装
+			-- false 表示异步安装，不阻塞启动
+			sync_install = false,
 
-            -- 同步安装
-            -- false 表示异步安装，不阻塞启动
-            sync_install = false,
+			-- ====================================================================
+			-- 语法高亮
+			-- ====================================================================
 
-            -- ====================================================================
-            -- 语法高亮
-            -- ====================================================================
+			highlight = {
+				enable = true,
 
-            highlight = {
-                enable = true,
+				-- 禁用指定语言的 Tree-sitter 高亮
+				-- 如果某个语言高亮异常，可以在这里加进去
+				disable = {},
 
-                -- 禁用指定语言的 Tree-sitter 高亮
-                -- 如果某个语言高亮异常，可以在这里加进去
-                disable = {},
+				-- 不额外启用 regex 高亮
+				-- true 可能导致重复高亮，除非某些语言确实需要
+				additional_vim_regex_highlighting = false,
+			},
 
-                -- 不额外启用 regex 高亮
-                -- true 可能导致重复高亮，除非某些语言确实需要
-                additional_vim_regex_highlighting = false,
-            },
+			-- ====================================================================
+			-- 缩进配置
+			-- ====================================================================
 
-            -- ====================================================================
-            -- 缩进配置
-            -- ====================================================================
+			indent = {
+				enable = true,
 
-            indent = {
-                enable = true,
+				-- 某些语言的 treesitter 缩进可能不稳定
+				-- 后续如果遇到缩进异常，可以单独禁用
+				disable = {},
+			},
 
-                -- 某些语言的 treesitter 缩进可能不稳定
-                -- 后续如果遇到缩进异常，可以单独禁用
-                disable = {},
-            },
+			-- ====================================================================
+			-- 增量选择
+			-- ====================================================================
+			--
+			-- 用 Tree-sitter 结构逐级扩大 / 缩小选择范围。
+			-- 例如从变量名扩大到表达式、函数参数、函数体等。
 
-            -- ====================================================================
-            -- 增量选择
-            -- ====================================================================
-            --
-            -- 用 Tree-sitter 结构逐级扩大 / 缩小选择范围。
-            -- 例如从变量名扩大到表达式、函数参数、函数体等。
+			incremental_selection = {
+				enable = true,
 
-            incremental_selection = {
-                enable = true,
+				keymaps = {
+					init_selection = "<C-space>",
+					node_incremental = "<C-space>",
+					scope_incremental = false,
+					node_decremental = "<BS>",
+				},
+			},
+		},
 
-                keymaps = {
-                    init_selection = "<C-space>",
-                    node_incremental = "<C-space>",
-                    scope_incremental = false,
-                    node_decremental = "<BS>",
-                },
-            },
-        },
-
-        config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
-        end,
-    },
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+		end,
+	},
 }
