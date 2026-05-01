@@ -1,78 +1,64 @@
--- ============================================================================
--- Neovim 主页美化: folke/snacks.nvim dashboard
--- ============================================================================
---
--- 功能说明:
---   • 使用 snacks.nvim 的 dashboard 模块美化 Neovim 启动首页
---   • 提供 Logo、快捷入口、最近文件、最近项目和启动耗时显示
---   • 与 lazy.nvim / fzf-lua / tokyonight 配合较好
---   • 只启用 dashboard，不启用 snacks.nvim 的其他模块，避免和现有插件冲突
---
--- 配置效果:
---   ├─ Header: 显示自定义 Neovim ASCII Logo
---   ├─ Keys: 显示常用入口，例如搜索文件、搜索文本、最近文件、配置目录
---   ├─ Recent: 显示最近打开文件
---   ├─ Projects: 显示最近项目
---   ├─ Startup: 显示 lazy.nvim 启动耗时
---   └─ Picker: 默认调用 fzf-lua，和当前搜索方案保持一致
---
--- 快捷键:
---   • f: 搜索文件
---   • g: 搜索文本
---   • r: 最近文件
---   • c: 打开 Neovim 配置目录
---   • l: 打开 Lazy.nvim
---   • m: 打开 Mason
---   • q: 退出 Neovim
---
--- Lazy.nvim 说明:
---   • priority = 1000 表示尽早 setup snacks.nvim
---   • lazy = false 表示启动时加载 dashboard
---   • opts.dashboard.enabled = true 表示只启用 dashboard 模块
---
+local function pick(method, opts)
+    return function()
+        Snacks.picker[method](opts)
+    end
+end
 
 return {
     {
         "folke/snacks.nvim",
-
-        -- 尽早加载
-        -- dashboard 是启动页插件，应该在 Neovim 启动阶段可用
         priority = 1000,
-
-        -- 不懒加载
-        -- 否则 nvim 空启动时可能无法显示主页
         lazy = false,
-
+        keys = {
+            {
+                "<leader>ff",
+                pick("files"),
+                desc = "搜索文件",
+            },
+            {
+                "<leader>fg",
+                pick("grep"),
+                desc = "搜索文本",
+            },
+            {
+                "<leader>fb",
+                pick("buffers"),
+                desc = "搜索 Buffer",
+            },
+            {
+                "<leader>fo",
+                pick("recent"),
+                desc = "搜索历史文件",
+            },
+            {
+                "<leader>fc",
+                pick("commands"),
+                desc = "搜索命令",
+            },
+            {
+                "<leader>fk",
+                pick("keymaps"),
+                desc = "搜索快捷键",
+            },
+            {
+                "<leader>fh",
+                pick("help"),
+                desc = "搜索帮助文档",
+            },
+            {
+                "<leader>fr",
+                pick("resume"),
+                desc = "恢复上一次搜索",
+            },
+        },
         opts = {
-            -- ====================================================================
-            -- Dashboard 配置
-            -- ====================================================================
-
             dashboard = {
-                -- 启用 dashboard 模块
                 enabled = true,
-
-                -- 首页宽度
-                width = 60,
-
-                -- nil 表示垂直居中
+                width = 68,
                 row = nil,
-
-                -- nil 表示水平居中
                 col = nil,
-
-                -- 多列 pane 之间的间隔
-                pane_gap = 4,
-
-                -- ==================================================================
-                -- 预设内容
-                -- ==================================================================
-
+                pane_gap = 3,
                 preset = {
-                    -- Header Logo
-                    -- 注意:
-                    --   • 这里用纯文本 ASCII，稳定不依赖图片支持
-                    --   • 如果终端字体不等宽，Logo 可能会轻微错位
                     header = [[
 ███╗   ██╗██╗   ██╗██╗███╗   ███╗
 ████╗  ██║██║   ██║██║████╗ ████║
@@ -81,85 +67,69 @@ return {
 ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
 ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
 
-      ShanCircle Development Environment
+        Soft Frame Development Environment
                     ]],
-
-                    -- 首页快捷入口
                     keys = {
                         {
                             icon = " ",
                             key = "f",
                             desc = "Find File",
-                            action = ":lua Snacks.dashboard.pick('files')",
+                            action = pick("files"),
                         },
-
                         {
                             icon = " ",
                             key = "g",
                             desc = "Find Text",
-                            action = ":lua Snacks.dashboard.pick('live_grep')",
+                            action = pick("grep"),
                         },
-
                         {
                             icon = " ",
                             key = "r",
                             desc = "Recent Files",
-                            action = ":lua Snacks.dashboard.pick('oldfiles')",
+                            action = pick("recent"),
                         },
-
                         {
                             icon = " ",
                             key = "c",
                             desc = "Config",
-                            action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
+                            action = pick("files", { cwd = vim.fn.stdpath("config") }),
                         },
-
                         {
                             icon = "󰒲 ",
                             key = "l",
                             desc = "Lazy",
-                            action = ":Lazy",
+                            action = function()
+                                vim.cmd("Lazy")
+                            end,
                             enabled = package.loaded.lazy ~= nil,
                         },
-
                         {
-                            icon = " Mason",
+                            icon = "󱥚 ",
                             key = "m",
                             desc = "Mason",
-                            action = ":Mason",
+                            action = function()
+                                vim.cmd("Mason")
+                            end,
                         },
-
                         {
                             icon = " ",
                             key = "q",
                             desc = "Quit",
-                            action = ":qa",
+                            action = function()
+                                vim.cmd("qa")
+                            end,
                         },
                     },
                 },
-
-                -- ==================================================================
-                -- 页面布局
-                -- ==================================================================
-                --
-                -- section 可用项:
-                --   • header: Logo
-                --   • keys: 快捷入口
-                --   • recent_files: 最近文件
-                --   • projects: 最近项目
-                --   • startup: 启动耗时
-
                 sections = {
                     {
                         section = "header",
                     },
-
                     {
                         section = "keys",
                         gap = 1,
-                        padding = 1,
+                        padding = 2,
                     },
-
                     {
                         pane = 2,
                         icon = " ",
@@ -168,7 +138,6 @@ return {
                         indent = 2,
                         padding = 1,
                     },
-
                     {
                         pane = 2,
                         icon = " ",
@@ -177,9 +146,243 @@ return {
                         indent = 2,
                         padding = 1,
                     },
-
                     {
                         section = "startup",
+                        padding = 1,
+                    },
+                },
+            },
+            input = {
+                enabled = true,
+                icon = "󰥻 ",
+                icon_pos = "left",
+                prompt_pos = "title",
+            },
+            notifier = {
+                enabled = true,
+                timeout = 2500,
+                style = "compact",
+                top_down = true,
+                margin = {
+                    top = 1,
+                    right = 1,
+                    bottom = 0,
+                },
+            },
+            picker = {
+                enabled = true,
+                ui_select = true,
+                focus = "input",
+                layout = {
+                    preset = function()
+                        return vim.o.columns >= 140 and "default" or "vertical"
+                    end,
+                },
+                formatters = {
+                    file = {
+                        filename_first = true,
+                        truncate = "center",
+                    },
+                },
+                sources = {
+                    files = {
+                        hidden = true,
+                        follow = true,
+                        ignored = false,
+                        exclude = {
+                            ".git",
+                        },
+                    },
+                    grep = {
+                        hidden = true,
+                        follow = true,
+                        ignored = false,
+                        exclude = {
+                            ".git",
+                        },
+                    },
+                },
+                layouts = {
+                    default = {
+                        layout = {
+                            box = "horizontal",
+                            backdrop = false,
+                            width = 0.86,
+                            min_width = 120,
+                            height = 0.82,
+                            {
+                                box = "vertical",
+                                border = true,
+                                title = "{title} {live} {flags}",
+                                title_pos = "center",
+                                {
+                                    win = "input",
+                                    height = 1,
+                                    border = "bottom",
+                                },
+                                {
+                                    win = "list",
+                                    border = "none",
+                                },
+                            },
+                            {
+                                win = "preview",
+                                title = "{preview}",
+                                title_pos = "center",
+                                border = true,
+                                width = 0.52,
+                            },
+                        },
+                    },
+                    vertical = {
+                        layout = {
+                            backdrop = false,
+                            width = 0.58,
+                            min_width = 84,
+                            height = 0.82,
+                            min_height = 28,
+                            box = "vertical",
+                            border = true,
+                            title = "{title} {live} {flags}",
+                            title_pos = "center",
+                            {
+                                win = "input",
+                                height = 1,
+                                border = "bottom",
+                            },
+                            {
+                                win = "list",
+                                border = "none",
+                            },
+                            {
+                                win = "preview",
+                                title = "{preview}",
+                                title_pos = "center",
+                                height = 0.42,
+                                border = "top",
+                            },
+                        },
+                    },
+                    vscode = {
+                        hidden = {
+                            "preview",
+                        },
+                        layout = {
+                            backdrop = false,
+                            row = 1,
+                            width = 0.46,
+                            min_width = 82,
+                            height = 0.42,
+                            border = "none",
+                            box = "vertical",
+                            {
+                                win = "input",
+                                height = 1,
+                                border = true,
+                                title = "{title} {live} {flags}",
+                                title_pos = "center",
+                            },
+                            {
+                                win = "list",
+                                border = "hpad",
+                            },
+                            {
+                                win = "preview",
+                                title = "{preview}",
+                                border = true,
+                            },
+                        },
+                    },
+                    select = {
+                        hidden = {
+                            "preview",
+                        },
+                        layout = {
+                            backdrop = false,
+                            width = 0.48,
+                            min_width = 60,
+                            max_width = 90,
+                            height = 0.36,
+                            min_height = 3,
+                            box = "vertical",
+                            border = true,
+                            title = "{title}",
+                            title_pos = "center",
+                            {
+                                win = "input",
+                                height = 1,
+                                border = "bottom",
+                            },
+                            {
+                                win = "list",
+                                border = "none",
+                            },
+                        },
+                    },
+                },
+                win = {
+                    input = {
+                        wo = {
+                            winhighlight = "NormalFloat:NormalFloat,FloatBorder:SnacksPickerInputBorder,FloatTitle:SnacksPickerInputTitle",
+                        },
+                    },
+                    list = {
+                        wo = {
+                            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,FloatTitle:SnacksPickerBoxTitle,CursorLine:Visual,Search:None",
+                        },
+                    },
+                    preview = {
+                        wo = {
+                            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,FloatTitle:FloatTitle",
+                        },
+                    },
+                },
+            },
+            styles = {
+                dashboard = {
+                    wo = {
+                        winhighlight = "Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal",
+                    },
+                },
+                input = {
+                    backdrop = false,
+                    border = "rounded",
+                    title_pos = "center",
+                    width = 58,
+                    row = 4,
+                    wo = {
+                        winhighlight = "NormalFloat:NormalFloat,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
+                    },
+                },
+                notification = {
+                    border = "rounded",
+                    zindex = 100,
+                    ft = "markdown",
+                    wo = {
+                        winblend = 0,
+                        wrap = false,
+                        conceallevel = 2,
+                        colorcolumn = "",
+                    },
+                },
+                notification_history = {
+                    border = "rounded",
+                    zindex = 100,
+                    width = 0.6,
+                    height = 0.6,
+                    minimal = false,
+                    title = " Notification History ",
+                    title_pos = "center",
+                    ft = "markdown",
+                    bo = {
+                        filetype = "snacks_notif_history",
+                        modifiable = false,
+                    },
+                    wo = {
+                        winhighlight = "Normal:SnacksNotifierHistory,FloatBorder:FloatBorder,FloatTitle:FloatTitle",
+                    },
+                    keys = {
+                        q = "close",
                     },
                 },
             },
