@@ -1,0 +1,13 @@
+# =============================================================================
+# Ghostty macOS 配置
+# 路径：~/.config/ghostty/config/macos.ghostty
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Titlebar
+# -----------------------------------------------------------------------------
+macos-titlebar-style = transparent
+macos-window-buttons = visible
+macos-titlebar-proxy-icon = hidden
+macos-option-as-alt = true
+macos-window-shadow = true

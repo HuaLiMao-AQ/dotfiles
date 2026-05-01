@@ -4,17 +4,21 @@
       "source": "wezterm",
       "target": "~/.config/wezterm"
     },
-    "p10k.zsh": {
-      "source": "p10k.zsh",
-      "target": "~/.p10k.zsh"
+    "ghostty": {
+      "source": "ghostty",
+      "target": "~/.config/ghostty"
+    },
+    "nvim": {
+      "source": "nvim",
+      "target": "~/.config/nvim"
     },
     "zshrc": {
       "source": "zshrc",
       "target": "~/.zshrc"
     },
-    "nvim": {
-      "source": "nvim",
-      "target": "~/.config/nvim"
+    "p10k.zsh": {
+      "source": "p10k.zsh",
+      "target": "~/.p10k.zsh"
     }
   }
 }

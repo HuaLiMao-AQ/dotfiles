@@ -1,0 +1,8 @@
+# =============================================================================
+# Ghostty 主配置
+# 路径：~/.config/ghostty/config.ghostty
+# =============================================================================
+
+config-file = config/common.ghostty
+config-file = config/macos.ghostty
+config-file = config/linux.ghostty
