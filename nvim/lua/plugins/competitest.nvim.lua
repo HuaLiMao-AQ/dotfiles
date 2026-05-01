@@ -20,7 +20,7 @@
 -- ============================================================================
 
 return {
-	"xeluxee/competitest.nvim",
+	"HuaLiMao-AQ/competitest.nvim",
 
 	dependencies = {
 		"MunifTanjim/nui.nvim",
@@ -117,9 +117,9 @@ return {
 
 			-- 单题接收路径
 			-- 示例:
-			--   ./Luogu/P1001.cpp
-			--   ./Codeforces/A.cpp
-			received_problems_path = "$(CWD)/$(JUDGE)/$(PROBLEM).$(FEXT)",
+			--   ./P1001.cpp
+			--   ./A.cpp
+			received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
 
 			-- 比赛目录
 			-- 示例:
@@ -143,7 +143,7 @@ return {
 						"-Wextra",
 						"$(FNAME)",
 						"-o",
-						"$(FNOEXT)",
+						"$(FNPATH)",
 					},
 				},
 
@@ -155,7 +155,7 @@ return {
 						"-Wextra",
 						"$(FNAME)",
 						"-o",
-						"$(FNOEXT)",
+						"$(FNPATH)",
 					},
 				},
 
@@ -173,11 +173,11 @@ return {
 
 			run_command = {
 				cpp = {
-					exec = "./$(FNOEXT)",
+					exec = "$(FNPATH)",
 				},
 
 				c = {
-					exec = "./$(FNOEXT)",
+					exec = "$(FNPATH)",
 				},
 
 				python = {
@@ -190,7 +190,7 @@ return {
 				java = {
 					exec = "java",
 					args = {
-						"$(FNOEXT)",
+						"$(FNPATH)",
 					},
 				},
 			},
@@ -237,7 +237,7 @@ return {
 			-- 测试样例文件保存策略
 			-- ======================================================================
 
-			testcases_directory = "$(FNOEXT)",
+			testcases_directory = ".testcases/$(FNOEXT)",
 
 			testcases_input_file_format = "input$(TCNUM).txt",
 			testcases_output_file_format = "output$(TCNUM).txt",
