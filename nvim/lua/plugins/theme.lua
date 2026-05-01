@@ -1,3 +1,26 @@
+-- ============================================================================
+-- 主题与高亮: folke/tokyonight.nvim
+-- ============================================================================
+--
+-- 功能说明:
+--   • 使用 Tokyonight Night 作为 Neovim 主配色
+--   • 保持编辑区不透明，降低长期阅读疲劳和背景干扰
+--   • 统一 Snacks、Noice、bufferline、lualine 等界面组件的背景和边框色
+--   • 弱化过亮、过重的标题和选中态，减少压迫感
+--
+-- 配置效果:
+--   ├─ 编辑区: 使用 Tokyonight 默认背景，不启用透明
+--   ├─ 浮窗: 使用 bg_float，边框使用低饱和蓝色混合色
+--   ├─ Snacks: Dashboard / Input / Picker / Notifier 使用同一套高亮
+--   ├─ Noice: 命令行和补全菜单与 Snacks 浮窗风格一致
+--   └─ 选中态: 使用轻量背景混合色，不使用刺眼高亮
+--
+-- Lazy.nvim 说明:
+--   • lazy = false 表示启动时立即加载主题
+--   • priority = 1000 保证主题先于依赖高亮的 UI 插件生效
+--   • config 中执行 colorscheme("tokyonight")
+--
+
 return {
     {
         "folke/tokyonight.nvim",
@@ -52,8 +75,8 @@ return {
                     bg = c.bg,
                 }
                 hl.SnacksDashboardHeader = {
-                    fg = c.cyan,
-                    bold = true,
+                    fg = c.blue1,
+                    bold = false,
                 }
                 hl.SnacksDashboardTitle = {
                     fg = c.blue1,
@@ -67,7 +90,7 @@ return {
                 }
                 hl.SnacksDashboardKey = {
                     fg = c.orange,
-                    bold = true,
+                    bold = false,
                 }
                 hl.SnacksDashboardFooter = {
                     fg = c.comment,

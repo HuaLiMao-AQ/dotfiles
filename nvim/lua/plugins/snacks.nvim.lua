@@ -1,3 +1,41 @@
+-- ============================================================================
+-- UI 工具集合: folke/snacks.nvim
+-- ============================================================================
+--
+-- 功能说明:
+--   • 提供 dashboard、picker、input、notifier、quickfile、lazygit、scratch 等常用 UI 能力
+--   • 使用 Snacks picker 替代 Telescope 类搜索入口，统一文件、文本、命令、帮助等查找体验
+--   • 使用 Snacks input / notifier 统一输入框和通知样式
+--   • 使用 quickfile 减少打开文件时的额外等待
+--   • 提供 LazyGit 浮窗和 scratch 临时草稿能力
+--
+-- 配置效果:
+--   ├─ Dashboard: 启动页展示常用操作、最近文件、项目入口和启动耗时
+--   ├─ Picker: 文件 / 文本 / Buffer / 历史 / 命令 / 快捷键 / 帮助统一搜索
+--   ├─ Input: 使用紧凑浮窗输入框，和 Noice / 主题高亮保持一致
+--   ├─ Notifier: 使用 Snacks 通知后端，减少默认通知干扰
+--   ├─ LazyGit: 通过浮动终端打开 lazygit，并在缺少可执行文件时给出提示
+--   └─ Scratch: 快速打开和选择持久化草稿 buffer
+--
+-- 快捷键:
+--   • <leader>ff: 搜索文件
+--   • <leader>fg: 搜索文本
+--   • <leader>fb: 搜索 Buffer
+--   • <leader>fo: 搜索历史文件
+--   • <leader>fc: 搜索命令
+--   • <leader>fk: 搜索快捷键
+--   • <leader>fh: 搜索帮助文档
+--   • <leader>fr: 恢复上一次搜索
+--   • <leader>gg: 打开 LazyGit
+--   • <leader>.: 打开草稿
+--   • <leader>S: 选择草稿
+--
+-- Lazy.nvim 说明:
+--   • lazy = false 表示启动时加载，保证 dashboard / input / notifier 早期可用
+--   • priority = 1000 保证 UI 基础能力优先加载
+--   • opts 会自动传给 require("snacks").setup(...)
+--
+
 local function pick(method, opts)
 	return function()
 		Snacks.picker[method](opts)
@@ -49,6 +87,34 @@ return {
 				"<leader>fr",
 				pick("resume"),
 				desc = "恢复上一次搜索",
+			},
+			{
+				"<leader>gg",
+				function()
+					if vim.fn.executable("lazygit") ~= 1 then
+						Snacks.notify.warn("未找到 lazygit，请先安装 lazygit 后再使用。", {
+							title = "LazyGit",
+						})
+						return
+					end
+
+					Snacks.lazygit.open()
+				end,
+				desc = "LazyGit",
+			},
+			{
+				"<leader>.",
+				function()
+					Snacks.scratch.open()
+				end,
+				desc = "打开草稿",
+			},
+			{
+				"<leader>S",
+				function()
+					Snacks.scratch.select()
+				end,
+				desc = "选择草稿",
 			},
 		},
 		opts = {
@@ -139,6 +205,7 @@ return {
 						icon = " ",
 						title = "Recent Files",
 						section = "recent_files",
+						limit = 6,
 						indent = 2,
 						padding = 1,
 					},
@@ -147,6 +214,7 @@ return {
 						icon = " ",
 						title = "Projects",
 						section = "projects",
+						limit = 4,
 						indent = 2,
 						padding = 1,
 					},
@@ -156,6 +224,16 @@ return {
 					},
 				},
 			},
+			quickfile = {
+				enabled = true,
+			},
+			lazygit = {
+				enabled = true,
+				configure = true,
+			},
+			scratch = {
+				enabled = true,
+			},
 			input = {
 				enabled = true,
 				icon = "󰥻 ",
@@ -164,7 +242,7 @@ return {
 			},
 			notifier = {
 				enabled = true,
-				timeout = 2500,
+				timeout = 2200,
 				style = "compact",
 				top_down = true,
 				margin = {
@@ -179,7 +257,7 @@ return {
 				focus = "input",
 				layout = {
 					preset = function()
-						return vim.o.columns >= 140 and "default" or "vertical"
+						return vim.o.columns >= 128 and "default" or "vertical"
 					end,
 				},
 				formatters = {
@@ -212,7 +290,7 @@ return {
 							box = "horizontal",
 							backdrop = false,
 							width = 0.86,
-							min_width = 120,
+							min_width = 104,
 							height = 0.82,
 							{
 								box = "vertical",
@@ -241,8 +319,8 @@ return {
 					vertical = {
 						layout = {
 							backdrop = false,
-							width = 0.58,
-							min_width = 84,
+							width = 0.72,
+							min_width = 76,
 							height = 0.82,
 							min_height = 28,
 							box = "vertical",
@@ -262,7 +340,7 @@ return {
 								win = "preview",
 								title = "{preview}",
 								title_pos = "center",
-								height = 0.42,
+								height = 0.38,
 								border = "top",
 							},
 						},
@@ -353,7 +431,7 @@ return {
 					border = "rounded",
 					title_pos = "center",
 					width = 58,
-					row = 4,
+					row = 5,
 					wo = {
 						winhighlight = "NormalFloat:NormalFloat,FloatBorder:SnacksInputBorder,FloatTitle:SnacksInputTitle",
 					},
@@ -372,7 +450,7 @@ return {
 				notification_history = {
 					border = "rounded",
 					zindex = 100,
-					width = 0.6,
+					width = 0.52,
 					height = 0.6,
 					minimal = false,
 					title = " Notification History ",
