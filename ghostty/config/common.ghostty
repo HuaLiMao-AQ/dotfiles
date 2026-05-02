@@ -22,9 +22,9 @@ window-inherit-font-size = true
 # -----------------------------------------------------------------------------
 # Theme / Color
 # -----------------------------------------------------------------------------
-theme = Catppuccin Mocha
+# theme = Catppuccin Mocha
 
-# theme = TokyoNight
+theme = TokyoNight
 # theme = Dracula
 # theme = GruvboxDark
 # theme = OneHalfDark
@@ -37,8 +37,8 @@ window-colorspace = display-p3
 # -----------------------------------------------------------------------------
 # Window
 # -----------------------------------------------------------------------------
-background-opacity = 0.86
-background-blur = 20
+background-opacity = 0.94
+background-blur = 80
 
 window-padding-x = 0
 window-padding-y = 0
