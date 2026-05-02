@@ -50,7 +50,18 @@ return {
 		opts = {
 			options = {
 				mode = "buffers", -- 显示 buffer 而不是 tab
-				separator_style = "thin", -- 斜线分隔符
+				separator_style = { "", "" },
+				indicator = {
+					style = "underline",
+				},
+				offsets = {
+					{
+						filetype = "neo-tree",
+						text = "File Explorer",
+						highlight = "Directory",
+						separator = true,
+					},
+				},
 				always_show_bufferline = false, -- 始终显示标签栏
 
 				show_buffer_close_icons = false, -- 隐藏 buffer 关闭按钮
@@ -94,6 +105,8 @@ return {
 					bg = "NONE",
 					bold = true,
 					italic = true,
+					underline = true,
+					sp = "#7aa2f7",
 				},
 				separator = {
 					bg = "NONE",
@@ -105,7 +118,8 @@ return {
 					bg = "NONE",
 				},
 				indicator_selected = {
-					bg = "#1a1b26",
+					sp = "#7aa2f7",
+					underline = true,
 				},
 				modified = {
 					bg = "NONE",
