@@ -40,7 +40,7 @@ in
       historySubstringSearch.enable = false;
 
       # NixOS 入口：直接指向 HM 部署的 config 目录，不依赖 %x 自动解析
-      initExtra = ''
+      initContent = ''
         export ZSH_CONFIG_HOME="$HOME/.config/zsh/config"
         if [[ -r "$ZSH_CONFIG_HOME/init.zsh" ]]; then
           source "$ZSH_CONFIG_HOME/init.zsh"
