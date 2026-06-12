@@ -5,6 +5,7 @@
     ./common.nix
     ./docker
     ./tailscale
-    ./vscode-remote
+
+    ./packages.nix
   ];
 }
