@@ -4,7 +4,7 @@
 # - 安全：遇到非软链旧文件先备份到 .bak.<timestamp>
 # - 跨平台：
 #     macOS / 普通 Linux  → 直接软链
-#     NixOS              → 跳过软链，由 home-manager 接管，执行 nixos-rebuild switch
+#     NixOS              → 先创建软链，再执行 nixos-rebuild switch
 
 set -euo pipefail
 
@@ -151,8 +151,64 @@ link() {
 	ok "链接 $dst -> $src"
 }
 
+relative_path() {
+	local src="$1" base="$2"
+
+	if command -v realpath >/dev/null 2>&1; then
+		realpath -m --relative-to="$base" "$src"
+	else
+		err "未找到 realpath，无法创建相对软链"
+		return 1
+	fi
+}
+
+link_relative() {
+	local src="$1" dst="$2"
+
+	if [[ ! -e "$src" && ! -L "$src" ]]; then
+		warn "跳过：源不存在 $src"
+		return 0
+	fi
+
+	local dst_dir rel
+	dst_dir="$(dirname -- "$dst")"
+	rel="$(relative_path "$src" "$dst_dir")"
+
+	if [[ -L "$dst" ]]; then
+		local cur
+		cur="$(readlink "$dst")"
+		if [[ "$cur" == "$rel" ]]; then
+			ok "已就绪 $dst"
+			return 0
+		fi
+		info "替换旧链接 $dst (was: $cur)"
+		run rm -f "$dst"
+	elif [[ -e "$dst" ]]; then
+		if ((FORCE)); then
+			warn "强制移除已存在 $dst"
+			run rm -rf "$dst"
+		else
+			local backup="$dst.bak.$TS"
+			warn "备份 $dst -> $backup"
+			run mv "$dst" "$backup"
+		fi
+	fi
+
+	run mkdir -p "$dst_dir"
+	if ((DRY_RUN)); then
+		printf '%s$ (cd %q && ln -s %q %q)%s\n' \
+			"$c_dim" "$dst_dir" "$rel" "$(basename -- "$dst")" "$c_off"
+	else
+		(
+			cd "$dst_dir"
+			ln -s "$rel" "$(basename -- "$dst")"
+		)
+	fi
+	ok "链接 $dst -> $rel"
+}
+
 # ------------------------------------------------------------
-# NixOS：交由 home-manager / nixos-rebuild 接管
+# NixOS：配置软链由 install.sh 管理，系统包由 home-manager 管理
 # ------------------------------------------------------------
 
 run_nixos_rebuild() {
@@ -164,7 +220,13 @@ run_nixos_rebuild() {
 		return 1
 	fi
 
-	info "NixOS：软链由 home-manager 接管，跳过 install.sh 的 ln 步骤"
+	info "NixOS：创建配置软链，home-manager 仅管理软件包与 shell 入口"
+	link_relative "$DOTFILES_DIR/zsh/config" "$XDG_CONFIG_HOME/zsh/config"
+	if ((!ONLY_ZSH)) && ((!SKIP_CONFIG)); then
+		[[ -d "$DOTFILES_DIR/nvim" ]] && link_relative "$DOTFILES_DIR/nvim" "$XDG_CONFIG_HOME/nvim"
+		[[ -d "$DOTFILES_DIR/ghostty" ]] && link_relative "$DOTFILES_DIR/ghostty" "$XDG_CONFIG_HOME/ghostty"
+	fi
+
 	info "Flake     : $flake_dir#$host"
 
 	if ((NO_REBUILD)); then
