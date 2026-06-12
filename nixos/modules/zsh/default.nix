@@ -18,7 +18,9 @@ with lib;
     ];
 
     # 把仓库内固定位置的 zsh/config 部署到 ~/.config/zsh/config
-    xdg.configFile."zsh/config".source = ../../../zsh/config;
+    xdg.configFile."zsh/config" = {
+      source = ../../../zsh/config;
+    };
 
     programs.zsh = {
       enable = true;
