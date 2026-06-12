@@ -2,18 +2,10 @@
 { pkgs, lib, config, ... }:
 with lib;
 
-let
-  cfg = config.modules.zsh;
-
-  # 仓库内 zsh/config 真实路径（与 nvim 模块同口径）
-  # 用 mkOutOfStoreSymlink：改完模块文件无需 rebuild 即生效
-  # 跨机部署时确保 dotfiles 克隆到同一路径
-  dotfilesZshConfig = "${config.home.homeDirectory}/Configure/dotfiles/zsh/config";
-in
 {
   options.modules.zsh.enable = mkEnableOption "zsh";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.zsh.enable {
     # 工具链：与 aliases.zsh / zi.zsh 的降级判定保持一致
     home.packages = with pkgs; [
       git
@@ -25,9 +17,8 @@ in
       fd
     ];
 
-    # 把仓库的 zsh/config 部署到 ~/.config/zsh/config（可写软链）
-    xdg.configFile."zsh/config".source =
-      config.lib.file.mkOutOfStoreSymlink dotfilesZshConfig;
+    # 把仓库内固定位置的 zsh/config 部署到 ~/.config/zsh/config
+    xdg.configFile."zsh/config".source = ../../../zsh/config;
 
     programs.zsh = {
       enable = true;

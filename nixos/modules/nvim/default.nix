@@ -2,16 +2,12 @@
 
 with lib;
 
-let
-  cfg = config.modules.nvim;
-  dotfilesNvim = "${config.home.homeDirectory}/Configure/dotfiles/nvim";
-in
 {
   options.modules.nvim = {
     enable = mkEnableOption "nvim";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.modules.nvim.enable {
     home.packages = with pkgs; [
       # lazy.nvim / 插件管理
       git
@@ -55,7 +51,6 @@ in
       vimdiffAlias = true;
     };
 
-    xdg.configFile."nvim".source =
-      config.lib.file.mkOutOfStoreSymlink dotfilesNvim;
+    xdg.configFile."nvim".source = ../../../nvim;
   };
 }
