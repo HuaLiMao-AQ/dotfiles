@@ -48,7 +48,17 @@
   # 平台配置
   programs.zsh.enable = true;
 
-  services.openssh.enable = true;
+  # openssh 配置
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "hualimao" ];
+      MaxAuthTries = 3;
+    };
+  };
   
   system.stateVersion = "26.05";
 }
