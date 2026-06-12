@@ -1,0 +1,49 @@
+# plugins.zsh：zi 插件加载（不可用时直接跳过）
+
+# zi 不可用 → 安静返回，不阻塞 shell
+(( ${+functions[zi]} )) || return
+
+# 初始化 zi 自身的补全体系
+zicompinit
+zi light z-shell/z-a-meta-plugins
+
+# 延迟加载非关键插件
+zi ice wait lucid atinit='zpcompinit'
+zi ice wait lucid
+zi light z-shell/z-a-bin-gem-node
+
+# fzf-tab 依赖 compinit 之后的 completion 体系
+zi ice wait lucid
+zi light Aloxaf/fzf-tab
+
+# 仅当存在 eza 时加载 zsh-eza
+if [[ -n "$EZA_BIN" ]]; then
+    zi ice wait lucid
+    zi light z-shell/zsh-eza
+fi
+
+# alias 提示
+zi ice wait lucid
+zi light MichaelAquilina/zsh-you-should-use
+
+# 自动补全成对字符
+zi ice wait lucid
+zi light hlissner/zsh-autopair
+
+# OMZ snippets
+zi snippet OMZL::git.zsh
+zi snippet OMZP::git
+zi snippet OMZP::sudo
+zi snippet OMZP::vscode
+
+# autosuggestions 优先于 syntax-highlighting 加载
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+zi light zsh-users/zsh-autosuggestions
+zi light zsh-users/zsh-syntax-highlighting
+
+# macOS 专属插件示例（按需放在此处）
+# if [[ "$ZSH_PLATFORM" == "macos" ]]; then
+#     zi ice wait lucid
+#     zi light some/macos-only-plugin
+# fi

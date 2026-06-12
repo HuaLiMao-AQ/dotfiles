@@ -1,0 +1,10 @@
+# 极薄入口：仅负责定位并加载 config/init.zsh
+# 默认相对自身所在目录解析，跟随软链/镜像部署都成立
+if [[ -z "$ZSH_CONFIG_HOME" ]]; then
+	typeset -g ZSH_CONFIG_HOME="${${(%):-%x}:A:h}/config"
+fi
+export ZSH_CONFIG_HOME
+
+if [[ -r "$ZSH_CONFIG_HOME/init.zsh" ]]; then
+	source "$ZSH_CONFIG_HOME/init.zsh"
+fi

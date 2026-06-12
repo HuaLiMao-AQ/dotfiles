@@ -1,2 +1,13 @@
 nvim/lazy-lock.json
 .DS_Store
+
+# zsh：本机私有配置
+.zshrc
+zsh/config/local.zsh
+.config/zsh/local.zsh
+
+# zsh: 忽略 zi 文件配置
+zsh/zi
+
+# 忽略系统往zshrc写入的内容
+zsh/zshrc
