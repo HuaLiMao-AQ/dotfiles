@@ -1,5 +1,10 @@
 # modules/zsh/default.nix
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
 
 {

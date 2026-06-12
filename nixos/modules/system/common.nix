@@ -4,30 +4,33 @@
   # nix 设置
   nix = {
     settings = {
-        auto-optimise-store = true;
-        allowed-users = [ "@wheel" ];
-        experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      allowed-users = [ "@wheel" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
     gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 30d";
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
   };
 
   # boot
   boot = {
-      loader = {
-        grub = {
-         enable = true;
-         efiSupport = true;
-         device = "nodev";
-        };
-        efi = {
-            efiSysMountPoint = "/boot/efi";
-            canTouchEfiVariables = true;
-        };
+    loader = {
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
       };
+      efi = {
+        efiSysMountPoint = "/boot/efi";
+        canTouchEfiVariables = true;
+      };
+    };
   };
 
   # 本地化
@@ -41,7 +44,11 @@
   # 用户配置
   users.users.hualimao = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -59,6 +66,6 @@
       MaxAuthTries = 3;
     };
   };
-  
+
   system.stateVersion = "26.05";
 }

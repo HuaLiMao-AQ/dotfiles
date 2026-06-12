@@ -1,10 +1,10 @@
 { ... }:
 
 {
-    imports = [
-        ./common.nix
-        ./docker
-        ./tailscale
-        ./vscode-remote
-    ];
+  imports = [
+    ./common.nix
+    ./docker
+    ./tailscale
+    ./vscode-remote
+  ];
 }
