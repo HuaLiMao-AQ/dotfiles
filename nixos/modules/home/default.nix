@@ -6,5 +6,9 @@
     # cli
     ./zsh
     ./nvim
+    ./git
+
+    # 软件包
+    ./packages.nix
   ];
 }
