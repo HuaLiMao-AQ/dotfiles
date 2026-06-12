@@ -28,7 +28,13 @@
     { device = "/dev/disk/by-uuid/a3f5375f-db72-4e28-9ec7-2c2930241ab4";
       fsType = "ext4";
     };
-  
+
+  fileSystems."/home/hualimao" = {
+    device = "/data/home/hualimao";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   swapDevices = [ 
     {
         device = "/swapfile";
