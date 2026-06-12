@@ -19,7 +19,7 @@ with lib;
 
     # 把仓库内固定位置的 zsh/config 部署到 ~/.config/zsh/config
     xdg.configFile."zsh/config" = {
-      source = ../../../zsh/config;
+      source = config.lib.file.mkOutOfStoreSymlink "/home/hualimao/dotfiles/zsh/config";
     };
 
     programs.zsh = {

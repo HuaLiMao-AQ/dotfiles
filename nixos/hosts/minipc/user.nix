@@ -1,7 +1,7 @@
 { config, lib, inputs, ...}:
 
 {
-    imports = [ ../../modules/default.nix ];
+    imports = [ ../../modules/home/default.nix ];
     config.modules = {
         # cli
         nvim.enable = true;

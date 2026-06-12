@@ -52,7 +52,7 @@ with lib;
     };
 
     xdg.configFile."nvim" = {
-      source = ../../../nvim;
+      source = config.lib.file.mkOutOfStoreSymlink "/home/hualimao/dotfiles/nvim";
     };
   };
 }
