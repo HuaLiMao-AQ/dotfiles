@@ -1,6 +1,130 @@
 # Dotfiles
 
-个人配置仓库，当前重点维护 Neovim 配置。Neovim 配置入口在 `nvim/`，插件配置按功能拆分在 `nvim/lua/plugins/`。
+个人 dotfiles 仓库，覆盖 `zsh`、Neovim、Ghostty 和 NixOS/Home Manager 配置。
+
+当前约定：
+
+- `install.sh` 负责创建配置软链接。
+- NixOS/Home Manager 只负责系统配置、软件包和 shell 入口。
+- Home Manager 不接管 `~/.config/nvim`、`~/.config/zsh/config`、`~/.config/ghostty`。
+- NixOS 下创建相对软链接，避免在 Nix 配置里写固定绝对路径。
+
+## 目录结构
+
+| 路径 | 内容 |
+| --- | --- |
+| `install.sh` | 跨平台安装入口，处理软链接和 NixOS rebuild |
+| `zsh/` | zsh 启动入口、模块化配置、主题与本机私有配置模板 |
+| `nvim/` | Neovim 配置、插件配置、模板文件 |
+| `ghostty/` | Ghostty 配置 |
+| `nixos/` | NixOS flake、主机配置、Home Manager 用户模块 |
+
+## 安装
+
+### macOS / 普通 Linux
+
+```bash
+./install.sh
+```
+
+脚本会创建这些链接：
+
+```text
+~/.zshrc              -> <repo>/zsh/zshrc
+~/.config/zsh         -> <repo>/zsh/config
+~/.config/nvim        -> <repo>/nvim
+~/.config/ghostty     -> <repo>/ghostty
+```
+
+已有非软链接文件会备份为 `.bak.<timestamp>`。使用 `--force` 可以直接覆盖。
+
+### NixOS
+
+```bash
+./install.sh --rebuild-host=catserver
+```
+
+NixOS 下脚本先创建相对软链接，再执行：
+
+```bash
+sudo nixos-rebuild switch --flake <repo>/nixos#catserver
+```
+
+NixOS 下的链接目标示例：
+
+```text
+~/.config/nvim        -> ../dotfiles/nvim
+~/.config/zsh/config  -> ../../dotfiles/zsh/config
+```
+
+只处理链接、不执行 rebuild：
+
+```bash
+./install.sh --no-rebuild
+```
+
+只处理 zsh：
+
+```bash
+./install.sh --only-zsh --no-rebuild
+```
+
+## NixOS 配置边界
+
+NixOS 模块入口：
+
+```text
+nixos/modules/default.nix
+```
+
+Home Manager 用户模块入口：
+
+```text
+nixos/modules/home/default.nix
+```
+
+Home Manager 模块启用 `nvim` 和 `zsh` 的软件包与 shell 入口，但不声明 `xdg.configFile."nvim"` 或 `xdg.configFile."zsh/config"`。这样可以避免 Home Manager 递归接管配置目录，减少 `/nix/store` 快照链接和 `outside $HOME` 构建错误。
+
+## 清理旧 Home Manager 接管残留
+
+如果曾经让 Home Manager 管理过 `~/.config/nvim`，可能会看到这类文件：
+
+```text
+init.lua -> /nix/store/...-home-manager-files/.config/nvim/init.lua
+init.lua.hm-backup
+```
+
+恢复 `init.lua`：
+
+```bash
+cd ~/.config/nvim
+rm init.lua
+mv init.lua.hm-backup init.lua
+```
+
+检查还有没有旧的 `/nix/store` 链接：
+
+```bash
+find ~/.config/nvim -type l -lname '/nix/store/*' -ls
+```
+
+如果旧链接较多，直接备份当前目录后重新运行安装脚本更干净：
+
+```bash
+mv ~/.config/nvim ~/.config/nvim.bak.$(date +%Y%m%d-%H%M%S)
+cd ~/dotfiles
+./install.sh --no-rebuild
+```
+
+## 常用命令
+
+| 命令 | 作用 |
+| --- | --- |
+| `./install.sh -n` | dry-run，查看将要执行的操作 |
+| `./install.sh --no-rebuild` | NixOS 下只处理链接，不执行 rebuild |
+| `./install.sh --skip-config` | 跳过 `nvim`、`ghostty` 等共享配置 |
+| `./install.sh --only-zsh` | 只处理 zsh 相关配置 |
+| `sudo nixos-rebuild switch --flake ./nixos#catserver` | 手动切换 NixOS 配置 |
 
 ## Neovim 快捷键
 
@@ -166,4 +290,3 @@
 | `r` | 重命名当前条目 |
 | `m` | 移动当前条目 |
 | `d` | 删除当前条目 |
-
