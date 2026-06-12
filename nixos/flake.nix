@@ -23,7 +23,7 @@
                 { networking.hostName = hostname; }
 
                 # 系统配置文件
-                ./modules/default.nix
+                ./modules/system/default.nix
 
                 # 硬件配置文件
                 (./. + "/hosts/${host}/hardware-configuration.nix")
