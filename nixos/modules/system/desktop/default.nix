@@ -13,7 +13,7 @@ let
   sddmThemeName = "sddm-astronaut-theme";
 
   sddmTheme = pkgs.sddm-astronaut.override {
-    embeddedTheme = "japanese_aesthetic";
+    embeddedTheme = "hyprland_kath";
   };
 in
 {
