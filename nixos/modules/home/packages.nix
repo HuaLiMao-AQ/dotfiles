@@ -8,5 +8,9 @@ with lib;
 
     # fmt 工具
     nixfmt
+    
+    # distrobox
+    distrobox
+    distrobox-tui
   ];
 }
