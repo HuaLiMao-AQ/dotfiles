@@ -11,6 +11,7 @@
     # cli
     nvim.enable = true;
     zsh.enable = true;
+    git-ext.enable = true;
 
     # ide
     vscode.enable = true;
