@@ -18,21 +18,6 @@
     };
   };
 
-  # boot
-  boot = {
-    loader = {
-      grub = {
-        enable = true;
-        efiSupport = true;
-        device = "nodev";
-      };
-      efi = {
-        efiSysMountPoint = "/boot/efi";
-        canTouchEfiVariables = true;
-      };
-    };
-  };
-
   # 本地化
   time.timeZone = "Asia/Shanghai";
   i18n.defaultLocale = "en_US.UTF-8";
