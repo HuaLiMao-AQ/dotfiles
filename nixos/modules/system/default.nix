@@ -4,7 +4,6 @@
   imports = [
     # 基本配置文件
     ./grub
-    ./common.nix
     ./i18n
     ./nixos
 

@@ -6,6 +6,11 @@ let
   inherit (lib) mkForce;
 in
 {
+  imports = [
+    ./services.nix
+    ./users.nix
+  ];
+
   # nix 设置
   nix = {
     settings = {
