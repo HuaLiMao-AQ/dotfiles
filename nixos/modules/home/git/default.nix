@@ -3,6 +3,10 @@
 {
   programs.git = {
     enable = true;
+    
+    # 启用 git-lfs
+    lfs.enable = true;
+
     settings = {
       user = {
         name = "HuaLiMao-AQ";
