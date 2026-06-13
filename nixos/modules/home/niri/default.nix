@@ -17,5 +17,7 @@ in
     xdg.configFile."mako".source = ./../../../../mako;
     xdg.configFile."swaylock".source = ./../../../../swaylock;
     xdg.configFile."fcitx5".source = ./../../../../fcitx5;
+    xdg.configFile."ghostty".source = ./../../../../ghostty;
+
   };
 }
