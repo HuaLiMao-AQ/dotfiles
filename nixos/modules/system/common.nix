@@ -27,8 +27,5 @@
     };
   };
 
-  # 动态链接修复
-  programs.nix-ld.enable = true;
-
   system.stateVersion = "26.05";
 }
