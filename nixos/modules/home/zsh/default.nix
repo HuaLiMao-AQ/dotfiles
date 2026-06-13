@@ -1,4 +1,8 @@
-# modules/zsh/default.nix
+/**
+  zsh 配置文件
+  由于zsh配置是linux/macos共用的
+  本文件只包含基础的配置文件
+*/
 {
   pkgs,
   lib,
