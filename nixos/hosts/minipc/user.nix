@@ -11,5 +11,8 @@
     # cli
     nvim.enable = true;
     zsh.enable = true;
+
+    # ide
+    vscode.enable = true;
   };
 }

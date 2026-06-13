@@ -6,9 +6,6 @@ with lib;
     fastfetch
     btop
 
-    # fmt 工具
-    nixfmt
-    
     # distrobox
     distrobox
     distrobox-tui
