@@ -26,6 +26,4 @@
       MaxAuthTries = 3;
     };
   };
-
-  system.stateVersion = "26.05";
 }
