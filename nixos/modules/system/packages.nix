@@ -7,6 +7,9 @@
     inputs.nix-index-database.nixosModules.nix-index
   ];
 
+  # 启用非自由软件
+  nixpkgs.config.allowUnfree = true;
+
   # 启用 comma
   programs.nix-index-database.comma.enable = true;
 
