@@ -1,8 +1,6 @@
 {
-  config,
   lib,
   osConfig,
-  pkgs,
   ...
 }:
 
@@ -18,6 +16,6 @@ in
     xdg.configFile."fuzzel".source = ./../../../../fuzzel;
     xdg.configFile."mako".source = ./../../../../mako;
     xdg.configFile."swaylock".source = ./../../../../swaylock;
-
+    xdg.configFile."fcitx5".source = ./../../../../fcitx5;
   };
 }
