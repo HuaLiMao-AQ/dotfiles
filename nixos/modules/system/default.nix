@@ -1,10 +1,11 @@
-{ config, ... }:
+{ ... }:
 
 {
   imports = [
     # 基本配置文件
     ./grub
     ./common.nix
+    ./i18n
 
     # 服务配置文件
     ./docker

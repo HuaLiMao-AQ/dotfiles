@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # nix 设置
@@ -16,14 +16,6 @@
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-  };
-
-  # 本地化
-  time.timeZone = "Asia/Shanghai";
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
   };
 
   # 用户配置

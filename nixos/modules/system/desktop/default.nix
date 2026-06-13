@@ -38,6 +38,9 @@ in
       extraPackages = [
         sddmTheme
       ];
+
+      # sddm 启用中午
+      settings.General.GreeterEnvironment = "LANG=zh_CN.UTF-8,LANGUAGE=zh_CN:zh";
     };
 
     security.polkit.enable = true;
