@@ -1,23 +1,6 @@
 { pkgs, ... }:
 
 {
-  # nix 设置
-  nix = {
-    settings = {
-      auto-optimise-store = true;
-      allowed-users = [ "@wheel" ];
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-    };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
-  };
-
   # 用户配置
   users.users.hualimao = {
     isNormalUser = true;

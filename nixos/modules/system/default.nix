@@ -6,6 +6,7 @@
     ./grub
     ./common.nix
     ./i18n
+    ./nixos
 
     # 服务配置文件
     ./docker
