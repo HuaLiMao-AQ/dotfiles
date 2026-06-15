@@ -67,5 +67,6 @@
     nvd
     nix-tree
     nix-du
+    direnv
   ];
 }
