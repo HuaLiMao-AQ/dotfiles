@@ -9,18 +9,60 @@ let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.modules.desktop.niri.enable;
   desktopCfg = config.modules.desktop.enable;
+
+  sddmThemeName = "sddm-astronaut-theme";
+
+  sddmTheme = pkgs.sddm-astronaut.override {
+    embeddedTheme = "hyprland_kath";
+  };
 in
 {
   options.modules.desktop.niri.enable = mkEnableOption "Niri configure";
 
   config = mkIf (cfg && desktopCfg) {
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+
+      theme = sddmThemeName;
+
+      extraPackages = [
+        sddmTheme
+      ];
+
+      # sddm 启用中文
+      settings.General.GreeterEnvironment = "LANG=zh_CN.UTF-8,LANGUAGE=zh_CN:zh";
+    };
+
     programs.niri = {
       enable = true;
       useNautilus = false;
     };
 
+    # fcitx5
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+
+      fcitx5 = {
+        waylandFrontend = true;
+
+        addons = with pkgs; [
+          fcitx5-gtk
+          fcitx5-rime
+          qt6Packages.fcitx5-configtool
+          qt6Packages.fcitx5-chinese-addons
+        ];
+      };
+    };
+
+    security.polkit.enable = true;
+
     environment.systemPackages = with pkgs; [
+      pkgs.fcitx5-mellow-themes
+
       # 终端
+      sddmTheme
       ghostty
       nerd-fonts.jetbrains-mono
 

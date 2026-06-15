@@ -20,7 +20,8 @@
     desktop = {
       enable = true;
 
-      niri.enable = true;
+      gnome.enable = true;
+      niri.enable = false;
     };
   };
 }

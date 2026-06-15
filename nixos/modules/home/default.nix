@@ -9,6 +9,7 @@
     ./git
 
     # desktop
+    ./gnome
     ./niri
 
     # ide 需要包或配置文件
