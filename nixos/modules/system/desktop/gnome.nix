@@ -45,11 +45,6 @@ in
       # 剪贴板
       wl-clipboard
 
-      # 音量、亮度、媒体控制
-      brightnessctl
-      playerctl
-      pavucontrol
-
       # 托盘与磁盘工具
       networkmanagerapplet
       gnome-disk-utility
@@ -57,6 +52,18 @@ in
       # 归档和缩略图支持
       file-roller
       ffmpegthumbnailer
+    ];
+
+    environment.gnome.excludePackages = with pkgs; [
+      epiphany # GNOME Web
+      geary # 邮件
+      gnome-tour # GNOME 导览
+      decibels # 音频播放器
+      simple-scan # 文档扫描
+      gnome-contacts # 联系人
+      gnome-weather # 天气
+      gnome-maps # 地图
+      snapshot # 相机
     ];
 
     # U 盘、移动硬盘等
