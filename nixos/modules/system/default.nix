@@ -3,7 +3,7 @@
 {
   imports = [
     # 基本配置文件
-    ./grub
+    ./boot
     ./i18n
     ./nixos
 
