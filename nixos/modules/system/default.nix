@@ -20,8 +20,7 @@
     desktop = {
       enable = true;
 
-      gnome.enable = true;
-      niri.enable = false;
+      kde.enable = true;
     };
   };
 }

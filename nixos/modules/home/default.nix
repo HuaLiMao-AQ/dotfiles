@@ -9,8 +9,7 @@
     ./git
 
     # desktop
-    ./gnome
-    ./niri
+    ./kde
 
     # ide 需要包或配置文件
     ./vscode

@@ -9,8 +9,7 @@ let
 in
 {
   imports = [
-    ./gnome.nix
-    ./niri.nix
+    ./kde.nix
   ];
 
   options.modules.desktop.enable = mkEnableOption "desktop configuration";
