@@ -5,6 +5,7 @@
   time.timeZone = "Asia/Shanghai";
 
   i18n = {
+    # 如果启用桌面环境，该配置会被强制覆盖
     defaultLocale = "en_US.UTF-8";
 
     supportedLocales = [
