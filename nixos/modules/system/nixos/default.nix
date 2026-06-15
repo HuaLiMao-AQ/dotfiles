@@ -21,6 +21,7 @@ in
         "flakes"
       ];
       substituters = mkForce [
+        "https://mirrors.bfsu.edu.cn/nix-channels/store?priority=5"
         "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=10"
         "https://cache.nixos.org?priority=40"
       ];
