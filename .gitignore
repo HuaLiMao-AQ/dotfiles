@@ -7,7 +7,7 @@ zsh/config/local.zsh
 .config/zsh/local.zsh
 
 # zsh: 忽略 zi 文件配置
-zsh/zi
+zsh/config/zi
 
 # 忽略系统往zshrc写入的内容
 zsh/zshrc
