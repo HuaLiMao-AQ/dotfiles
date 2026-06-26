@@ -31,7 +31,8 @@
 
 ```text
 ~/.zshrc              -> <repo>/zsh/zshrc
-~/.config/zsh         -> <repo>/zsh/config
+~/.zprofile           -> <repo>/zsh/zprofile
+~/.config/zsh/config  -> <repo>/zsh/config
 ~/.config/nvim        -> <repo>/nvim
 ~/.config/ghostty     -> <repo>/ghostty
 ```

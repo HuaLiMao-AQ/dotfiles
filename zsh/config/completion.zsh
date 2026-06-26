@@ -1,5 +1,10 @@
 # completion.zsh：补全配置
 
+# 程序生成的补全配置
+typeset -gU fpath
+COMPLETIONS_PATH="$ZSH_CONFIG_HOME/completions"
+fpath=($COMPLETIONS_PATH $fpath)
+
 autoload -Uz compinit
 compinit -u
 
