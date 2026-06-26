@@ -31,6 +31,7 @@
     gzip
     xz
     p7zip
+    zstd
 
     # inspection
     file
@@ -41,6 +42,7 @@
     usbutils
     dmidecode
     jq
+    pv
 
     # disk / filesystem
     parted

@@ -31,6 +31,11 @@ fi
 alias rm='rm -i'
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
+# tmux
+alias t='tmux new-session -A -s main'
+alias ta='tmux attach-session'
+alias tls='tmux list-sessions'
+
 # NixOS 专属
 if [[ "$ZSH_DISTRO" == "nixos" ]]; then
     alias rebuild='sudo nixos-rebuild switch --flake "${NIXOS_CONFIG_DIR:-$HOME/nixos}#"'
